@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5416A1901A587888004C4F4F /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5416A18F1A587888004C4F4F /* TutorialViewController.m */; };
+		54193C811A58637000AF75CE /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C781A58637000AF75CE /* Car.m */; };
+		54193C821A58637000AF75CE /* FuelEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7A1A58637000AF75CE /* FuelEntry.m */; };
+		54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */; };
+		54193C841A58637000AF75CE /* OilChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7E1A58637000AF75CE /* OilChange.m */; };
+		54193C851A58637000AF75CE /* ServiceEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C801A58637000AF75CE /* ServiceEntry.m */; };
 		54D00D3C1A558C28001F0FC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D3B1A558C28001F0FC4 /* main.m */; };
 		54D00D3F1A558C28001F0FC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D3E1A558C28001F0FC4 /* AppDelegate.m */; };
 		54D00D421A558C28001F0FC4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D411A558C28001F0FC4 /* ViewController.m */; };
@@ -14,6 +20,7 @@
 		54D00D471A558C28001F0FC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54D00D461A558C28001F0FC4 /* Images.xcassets */; };
 		54D00D4A1A558C28001F0FC4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D00D481A558C28001F0FC4 /* LaunchScreen.xib */; };
 		54D00D561A558C28001F0FC4 /* MileageTrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D551A558C28001F0FC4 /* MileageTrackerTests.m */; };
+		DFA07734656067A8133D3139 /* libPods-MileageTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 150D537D5340FC4F1DB2586B /* libPods-MileageTracker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +34,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		150D537D5340FC4F1DB2586B /* libPods-MileageTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MileageTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5416A18E1A587888004C4F4F /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		5416A18F1A587888004C4F4F /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		54193C771A58637000AF75CE /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
+		54193C781A58637000AF75CE /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
+		54193C791A58637000AF75CE /* FuelEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuelEntry.h; sourceTree = "<group>"; };
+		54193C7A1A58637000AF75CE /* FuelEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuelEntry.m; sourceTree = "<group>"; };
+		54193C7B1A58637000AF75CE /* MonthlyMilesEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthlyMilesEntry.h; sourceTree = "<group>"; };
+		54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthlyMilesEntry.m; sourceTree = "<group>"; };
+		54193C7D1A58637000AF75CE /* OilChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OilChange.h; sourceTree = "<group>"; };
+		54193C7E1A58637000AF75CE /* OilChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OilChange.m; sourceTree = "<group>"; };
+		54193C7F1A58637000AF75CE /* ServiceEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceEntry.h; sourceTree = "<group>"; };
+		54193C801A58637000AF75CE /* ServiceEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceEntry.m; sourceTree = "<group>"; };
 		54D00D361A558C28001F0FC4 /* MileageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MileageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D00D3A1A558C28001F0FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54D00D3B1A558C28001F0FC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +60,8 @@
 		54D00D4F1A558C28001F0FC4 /* MileageTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MileageTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D00D541A558C28001F0FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54D00D551A558C28001F0FC4 /* MileageTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MileageTrackerTests.m; sourceTree = "<group>"; };
+		6488B65CEC8B441D76481CB8 /* Pods-MileageTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MileageTracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MileageTracker/Pods-MileageTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		B620FB7AA2F3E2AFBDF9873E /* Pods-MileageTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MileageTracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-MileageTracker/Pods-MileageTracker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA07734656067A8133D3139 /* libPods-MileageTracker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +83,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2EADFD96F4F9A12A9B689592 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				150D537D5340FC4F1DB2586B /* libPods-MileageTracker.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54193C711A58633C00AF75CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				54193C771A58637000AF75CE /* Car.h */,
+				54193C781A58637000AF75CE /* Car.m */,
+				54193C791A58637000AF75CE /* FuelEntry.h */,
+				54193C7A1A58637000AF75CE /* FuelEntry.m */,
+				54193C7B1A58637000AF75CE /* MonthlyMilesEntry.h */,
+				54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */,
+				54193C7D1A58637000AF75CE /* OilChange.h */,
+				54193C7E1A58637000AF75CE /* OilChange.m */,
+				54193C7F1A58637000AF75CE /* ServiceEntry.h */,
+				54193C801A58637000AF75CE /* ServiceEntry.m */,
+			);
+			name = Model;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		54D00D2D1A558C28001F0FC4 = {
 			isa = PBXGroup;
 			children = (
 				54D00D381A558C28001F0FC4 /* MileageTracker */,
 				54D00D521A558C28001F0FC4 /* MileageTrackerTests */,
 				54D00D371A558C28001F0FC4 /* Products */,
+				8ECEE420B937936AB9E2CC02 /* Pods */,
+				2EADFD96F4F9A12A9B689592 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,10 +132,13 @@
 		54D00D381A558C28001F0FC4 /* MileageTracker */ = {
 			isa = PBXGroup;
 			children = (
+				54193C711A58633C00AF75CE /* Model */,
 				54D00D3D1A558C28001F0FC4 /* AppDelegate.h */,
 				54D00D3E1A558C28001F0FC4 /* AppDelegate.m */,
 				54D00D401A558C28001F0FC4 /* ViewController.h */,
 				54D00D411A558C28001F0FC4 /* ViewController.m */,
+				5416A18E1A587888004C4F4F /* TutorialViewController.h */,
+				5416A18F1A587888004C4F4F /* TutorialViewController.m */,
 				54D00D431A558C28001F0FC4 /* Main.storyboard */,
 				54D00D461A558C28001F0FC4 /* Images.xcassets */,
 				54D00D481A558C28001F0FC4 /* LaunchScreen.xib */,
@@ -119,6 +173,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8ECEE420B937936AB9E2CC02 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6488B65CEC8B441D76481CB8 /* Pods-MileageTracker.debug.xcconfig */,
+				B620FB7AA2F3E2AFBDF9873E /* Pods-MileageTracker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +189,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 54D00D591A558C28001F0FC4 /* Build configuration list for PBXNativeTarget "MileageTracker" */;
 			buildPhases = (
+				F6B1D1F1521879185865818C /* Check Pods Manifest.lock */,
 				54D00D321A558C28001F0FC4 /* Sources */,
 				54D00D331A558C28001F0FC4 /* Frameworks */,
 				54D00D341A558C28001F0FC4 /* Resources */,
+				D3FE42472200BCD088F7670B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -214,12 +279,51 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D3FE42472200BCD088F7670B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MileageTracker/Pods-MileageTracker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6B1D1F1521879185865818C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		54D00D321A558C28001F0FC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54193C811A58637000AF75CE /* Car.m in Sources */,
 				54D00D421A558C28001F0FC4 /* ViewController.m in Sources */,
+				5416A1901A587888004C4F4F /* TutorialViewController.m in Sources */,
+				54193C851A58637000AF75CE /* ServiceEntry.m in Sources */,
+				54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */,
+				54193C821A58637000AF75CE /* FuelEntry.m in Sources */,
+				54193C841A58637000AF75CE /* OilChange.m in Sources */,
 				54D00D3F1A558C28001F0FC4 /* AppDelegate.m in Sources */,
 				54D00D3C1A558C28001F0FC4 /* main.m in Sources */,
 			);
@@ -341,6 +445,7 @@
 		};
 		54D00D5A1A558C28001F0FC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6488B65CEC8B441D76481CB8 /* Pods-MileageTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MileageTracker/Info.plist;
@@ -351,6 +456,7 @@
 		};
 		54D00D5B1A558C28001F0FC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B620FB7AA2F3E2AFBDF9873E /* Pods-MileageTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MileageTracker/Info.plist;
@@ -412,6 +518,7 @@
 				54D00D5B1A558C28001F0FC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		54D00D5C1A558C28001F0FC4 /* Build configuration list for PBXNativeTarget "MileageTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +527,7 @@
 				54D00D5E1A558C28001F0FC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

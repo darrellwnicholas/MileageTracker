@@ -9,7 +9,8 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
-
+@property UIViewController *viewController;
+@property TutorialViewController *tutorialViewController;
 @end
 
 @implementation AppDelegate
@@ -17,7 +18,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialComplete"]) {
+        // TutorialComplete value is YES
+        NSLog(@"no first launch");
+        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+    } else {
+        // TutorialComplete value is NO or doesn't exist yet
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TutorialComplete"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"TutorialViewController"];
+        
+    }
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

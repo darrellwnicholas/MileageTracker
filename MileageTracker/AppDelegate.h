@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Car.h"
+#import "TutorialViewController.h"
+#import "ViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

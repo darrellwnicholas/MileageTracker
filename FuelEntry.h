@@ -12,9 +12,10 @@
 
 @interface FuelEntry : RLMObject
 @property NSDate *date;
-@property double mileage;
+@property float mileage;
 @property double price;
 @property double gallons;
 @property BOOL fillUp;
-@property NSString *driverID;
+@property NSData *fuelReceiptPhotoData;
+
 @end

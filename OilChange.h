@@ -11,6 +11,7 @@
 
 @interface OilChange : RLMObject
 @property NSDate *date;
-@property NSInteger mileage;
+@property float mileage;
+@property NSData *oilChangeReceiptPhotoData;
 @end
 

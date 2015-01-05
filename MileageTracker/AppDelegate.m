@@ -22,18 +22,19 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialComplete"]) {
-        // TutorialComplete value is YES
-        NSLog(@"no first launch");
-        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
-    } else {
+//  --Leave this part commented until you are done with the Tutorial--  //
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialComplete"]) {
+//        // TutorialComplete value is YES
+//        NSLog(@"no first launch");
+//        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+//    } else {
         // TutorialComplete value is NO or doesn't exist yet
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TutorialComplete"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"TutorialViewController"];
         
-    }
+//    }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     

@@ -19,14 +19,15 @@ RLM_ARRAY_TYPE(MonthlyMilesEntry)
 RLM_ARRAY_TYPE(ServiceEntry)
 
 @interface Car : RLMObject
-
 @property NSString *name;
 @property NSString *make;
 @property NSString *VIN;
 @property NSInteger year;
 @property BOOL activeCar;
-@property double currentMileage;
-
+@property float currentMileage;
+@property NSString *driverID;
+@property NSData *photoData;
+@property NSInteger milesBetweenOilChanges;
 @property RLMArray<OilChange> *oilChanges;
 @property RLMArray<FuelEntry> *fuelEntries;
 @property RLMArray<ServiceEntry> *serviceEntries;

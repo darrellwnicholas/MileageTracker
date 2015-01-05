@@ -11,7 +11,11 @@
 @interface MonthlyMilesEntry : RLMObject
 @property NSDate *date;
 @property NSString *month;
-@property double beginningMileage;
+@property float beginningMileage;
+@property float endingMileage;
+@property float personalMiles;
+@property float businessMiles;
+@property float totalMiles;
 
 // ------TODO------ //
 // set properties for business and personal use and calculate based on last month's mileage. Look up Realm docs

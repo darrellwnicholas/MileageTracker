@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5416A1901A587888004C4F4F /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5416A18F1A587888004C4F4F /* TutorialViewController.m */; };
+		5416A1931A5A2FA4004C4F4F /* Tutorial2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5416A1921A5A2FA4004C4F4F /* Tutorial2ViewController.m */; };
 		54193C811A58637000AF75CE /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C781A58637000AF75CE /* Car.m */; };
 		54193C821A58637000AF75CE /* FuelEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7A1A58637000AF75CE /* FuelEntry.m */; };
 		54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */; };
@@ -37,6 +38,8 @@
 		150D537D5340FC4F1DB2586B /* libPods-MileageTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MileageTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5416A18E1A587888004C4F4F /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		5416A18F1A587888004C4F4F /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		5416A1911A5A2FA4004C4F4F /* Tutorial2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial2ViewController.h; sourceTree = "<group>"; };
+		5416A1921A5A2FA4004C4F4F /* Tutorial2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial2ViewController.m; sourceTree = "<group>"; };
 		54193C771A58637000AF75CE /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
 		54193C781A58637000AF75CE /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
 		54193C791A58637000AF75CE /* FuelEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuelEntry.h; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				54D00D411A558C28001F0FC4 /* ViewController.m */,
 				5416A18E1A587888004C4F4F /* TutorialViewController.h */,
 				5416A18F1A587888004C4F4F /* TutorialViewController.m */,
+				5416A1911A5A2FA4004C4F4F /* Tutorial2ViewController.h */,
+				5416A1921A5A2FA4004C4F4F /* Tutorial2ViewController.m */,
 				54D00D431A558C28001F0FC4 /* Main.storyboard */,
 				54D00D461A558C28001F0FC4 /* Images.xcassets */,
 				54D00D481A558C28001F0FC4 /* LaunchScreen.xib */,
@@ -326,6 +331,7 @@
 				54193C841A58637000AF75CE /* OilChange.m in Sources */,
 				54D00D3F1A558C28001F0FC4 /* AppDelegate.m in Sources */,
 				54D00D3C1A558C28001F0FC4 /* main.m in Sources */,
+				5416A1931A5A2FA4004C4F4F /* Tutorial2ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

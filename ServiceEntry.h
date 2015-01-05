@@ -10,6 +10,7 @@
 
 @interface ServiceEntry : RLMObject
 @property NSDate *date;
-@property double mileage;
+@property float mileage;
 @property NSString *notes;
+@property NSData *serviceReceiptPhotoData;
 @end

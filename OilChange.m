@@ -9,4 +9,11 @@
 #import "OilChange.h"
 
 @implementation OilChange
+
++ (NSDictionary *)defaultPropertyValues {
+    NSDictionary *defaultValues = @{
+                                    @"date"             : [NSDate date],
+                                    };
+    return defaultValues;
+}
 @end

@@ -16,4 +16,6 @@
 @property NSString *notes;
 @property RLMArray<PhotoObject> *receipts;
 
++ (NSDictionary *)defaultPropertyValues;
+
 @end

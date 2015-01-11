@@ -11,6 +11,6 @@
 
 @interface CarTableViewController : UITableViewController
 
-@property (strong, nonatomic) NSString *activeCar;
+@property (strong, nonatomic) Car *activeCar;
 
 @end

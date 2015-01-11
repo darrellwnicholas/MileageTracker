@@ -9,4 +9,12 @@
 #import "ServiceEntry.h"
 
 @implementation ServiceEntry
+
++ (NSDictionary *)defaultPropertyValues {
+    NSDictionary *defaultValues = @{
+                                    @"date"  : [NSDate date],
+                                    @"notes" : @"",
+                                    };
+    return defaultValues;
+}
 @end

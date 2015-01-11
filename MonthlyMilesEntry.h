@@ -18,4 +18,6 @@
 @property NSInteger businessMiles;
 @property NSInteger totalMiles;
 
++ (NSDictionary *)defaultPropertyValues;
+
 @end

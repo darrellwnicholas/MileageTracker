@@ -15,5 +15,7 @@
 @property NSInteger mileage;
 @property RLMArray<PhotoObject> *receipts;
 
++ (NSDictionary *)defaultPropertyValues;
+
 @end
 

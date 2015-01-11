@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54019F191A63152400D2D045 /* CarDetailTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54019F181A63152300D2D045 /* CarDetailTVController.m */; };
 		54193C811A58637000AF75CE /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C781A58637000AF75CE /* Car.m */; };
 		54193C821A58637000AF75CE /* FuelEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7A1A58637000AF75CE /* FuelEntry.m */; };
 		54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		150D537D5340FC4F1DB2586B /* libPods-MileageTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MileageTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		54019F171A63152300D2D045 /* CarDetailTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDetailTVController.h; sourceTree = "<group>"; };
+		54019F181A63152300D2D045 /* CarDetailTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarDetailTVController.m; sourceTree = "<group>"; };
 		54193C771A58637000AF75CE /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
 		54193C781A58637000AF75CE /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Car.m; sourceTree = "<group>"; };
 		54193C791A58637000AF75CE /* FuelEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuelEntry.h; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 			children = (
 				54D71CD51A606A160017E3C1 /* CarTableViewController.h */,
 				54D71CD61A606A160017E3C1 /* CarTableViewController.m */,
+				54019F171A63152300D2D045 /* CarDetailTVController.h */,
+				54019F181A63152300D2D045 /* CarDetailTVController.m */,
 				54D71CD81A606A320017E3C1 /* FuelTableViewController.h */,
 				54D71CD91A606A320017E3C1 /* FuelTableViewController.m */,
 				54D71CDB1A606A4A0017E3C1 /* OilChangeTableViewController.h */,
@@ -359,6 +364,7 @@
 				54D71CDD1A606A4A0017E3C1 /* OilChangeTableViewController.m in Sources */,
 				54193C821A58637000AF75CE /* FuelEntry.m in Sources */,
 				54193C841A58637000AF75CE /* OilChange.m in Sources */,
+				54019F191A63152400D2D045 /* CarDetailTVController.m in Sources */,
 				54D71CE01A606A610017E3C1 /* ServiceTableViewController.m in Sources */,
 				54D00D3F1A558C28001F0FC4 /* AppDelegate.m in Sources */,
 				54D71C9E1A603AFD0017E3C1 /* PhotoObject.m in Sources */,

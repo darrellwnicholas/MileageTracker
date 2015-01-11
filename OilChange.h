@@ -7,11 +7,13 @@
 //
 
 #import <Realm/Realm.h>
-
+#import "PhotoObject.h"
 
 @interface OilChange : RLMObject
+
 @property NSDate *date;
-@property float mileage;
-@property NSData *oilChangeReceiptPhotoData;
+@property NSInteger mileage;
+@property RLMArray<PhotoObject> *receipts;
+
 @end
 

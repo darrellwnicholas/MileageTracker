@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "FilePath.h"
+#import "Car.h"
 
 @interface AppDelegate ()
-@property UIViewController *viewController;
-@property TutorialViewController *tutorialViewController;
 @end
 
 @implementation AppDelegate
@@ -18,25 +18,38 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+// self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
 //  --Leave this part commented until you are done with the Tutorial--  //
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialComplete"]) {
-//        // TutorialComplete value is YES
-//        NSLog(@"no first launch");
-//        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
-//    } else {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]) {
+        // TutorialComplete value is YES
+        NSLog(@"no first launch");
+    } else {
         // TutorialComplete value is NO or doesn't exist yet
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TutorialComplete"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"TutorialViewController"];
+        Car *car = [[Car alloc] init];
+        car.name = @"First Vehicle";
+        car.activeCar = @YES;
         
-//    }
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm addObject:car];
+        [realm commitWriteTransaction];
+
+//        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"TutorialViewController"];
+//        
+    }
+//    self.window.rootViewController = self.viewController;
+//    [self.window makeKeyAndVisible];
+//    
+//    NSURL *filePath = [[[FilePath alloc] init] applicationDocumentsDirectory];
+//    NSString *filePathString = filePath.path;
+//    NSString *databaseFilePath = [filePathString stringByAppendingString:@"MileageTrackerMainRealm"];
+    
     
     return YES;
     

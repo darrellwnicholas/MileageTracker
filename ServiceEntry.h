@@ -7,10 +7,13 @@
 //
 
 #import <Realm/Realm.h>
+#import "PhotoObject.h"
 
 @interface ServiceEntry : RLMObject
+
 @property NSDate *date;
-@property float mileage;
+@property NSInteger mileage;
 @property NSString *notes;
-@property NSData *serviceReceiptPhotoData;
+@property RLMArray<PhotoObject> *receipts;
+
 @end

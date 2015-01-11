@@ -12,11 +12,13 @@
 #import "FuelEntry.h"
 #import "ServiceEntry.h"
 #import "MonthlyMilesEntry.h"
+#import "PhotoObject.h"
 
 RLM_ARRAY_TYPE(OilChange)
 RLM_ARRAY_TYPE(FuelEntry)
 RLM_ARRAY_TYPE(MonthlyMilesEntry)
 RLM_ARRAY_TYPE(ServiceEntry)
+
 
 @interface Car : RLMObject
 @property NSString *name;
@@ -24,13 +26,16 @@ RLM_ARRAY_TYPE(ServiceEntry)
 @property NSString *VIN;
 @property NSInteger year;
 @property BOOL activeCar;
-@property float currentMileage;
+@property NSInteger currentMileage;
 @property NSString *driverID;
-@property NSData *photoData;
-@property NSInteger milesBetweenOilChanges;
+@property NSInteger oilChangeMiles;
+
+@property RLMArray<PhotoObject> *carPhoto;
 @property RLMArray<OilChange> *oilChanges;
 @property RLMArray<FuelEntry> *fuelEntries;
 @property RLMArray<ServiceEntry> *serviceEntries;
 @property RLMArray<MonthlyMilesEntry> *monthlyMilesEntries;
+
++ (NSDictionary *)defaultPropertyValues;
 
 @end

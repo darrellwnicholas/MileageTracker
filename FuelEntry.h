@@ -7,15 +7,17 @@
 //
 
 #import <Realm/Realm.h>
-
-
+#import "PhotoObject.h"
 
 @interface FuelEntry : RLMObject
+
 @property NSDate *date;
-@property float mileage;
+@property NSInteger mileage;
 @property double price;
 @property double gallons;
 @property BOOL fillUp;
-@property NSData *fuelReceiptPhotoData;
+@property RLMArray<PhotoObject> *receipts;
+
++ (NSDictionary *)defaultPropertyValues;
 
 @end

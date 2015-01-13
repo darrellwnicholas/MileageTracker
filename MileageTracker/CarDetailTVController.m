@@ -33,7 +33,7 @@
     _fuelCardPINTextField.text = _selectedCar.driverID;
     NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", _selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
-    _carPhotoImageView.image = [UIImage imageNamed:@"AppIcon152x152.png"];
+    _carPhotoImageView.image = [UIImage imageNamed:@"greenCarFull.png"];
     
     /*@property (weak, nonatomic) IBOutlet UITextField *carNameTextField;
      @property (weak, nonatomic) IBOutlet UITextField *carMakeTextField;

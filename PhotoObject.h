@@ -11,7 +11,9 @@
 
 @interface PhotoObject : RLMObject
 
-@property NSString *imageURLString;
+@property NSString *imageName;
+
++ (NSDictionary *)defaultPropertyValues;
 
 @end
 RLM_ARRAY_TYPE(PhotoObject)

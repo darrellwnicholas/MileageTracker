@@ -30,15 +30,36 @@
         // TutorialComplete value is NO or doesn't exist yet
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        Car *car = [[Car alloc] init];
-        car.name = @"First Vehicle";
-        car.activeCar = @YES;
-        
         RLMRealm *realm = [RLMRealm defaultRealm];
+        Car *car = [[Car alloc] init];
+        car.name = @"My Vehicle";
+        car.activeCar = @YES;
+        NSString *nameOfCar = @"theStandardCarPhoto.png";
+        PhotoObject *defaultCarPhoto = [[PhotoObject alloc] init];
+        defaultCarPhoto.imageName = nameOfCar;
+        
+        NSLog(@"%@",[UIImage imageNamed:defaultCarPhoto.imageName]);
+        
         [realm beginWriteTransaction];
         [realm addObject:car];
+        [realm addObject:defaultCarPhoto];
+        //defaultCarPhoto.imageName = imageURL;
+        [car.carPhoto addObject:defaultCarPhoto];
         [realm commitWriteTransaction];
+        /*
+         Car *car = [[Car alloc] init];
+         
+         car.name = textField.text;
+         NSString *imageURL = [[NSBundle mainBundle] pathForResource:@"greenCar" ofType:@"png"];
+         PhotoObject *defaultCarPhoto = [[PhotoObject alloc] init];
+         defaultCarPhoto.imageURLString = imageURL;
+         
+         
+         [realm beginWriteTransaction];
+         [car.carPhoto addObject:defaultCarPhoto];
+         [realm addObject:car];
+         [realm commitWriteTransaction];
+*/
 
 //        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"TutorialViewController"];
 //        

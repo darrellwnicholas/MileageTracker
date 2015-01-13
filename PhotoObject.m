@@ -10,4 +10,11 @@
 
 @implementation PhotoObject
 
++ (NSDictionary *)defaultPropertyValues {
+    NSDictionary *defaultValues = @{
+                                    @"imageName" : @"",
+                                    };
+    return defaultValues;
+}
+
 @end

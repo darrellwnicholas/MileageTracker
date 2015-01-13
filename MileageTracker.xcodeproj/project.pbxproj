@@ -14,9 +14,8 @@
 		54193C841A58637000AF75CE /* OilChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7E1A58637000AF75CE /* OilChange.m */; };
 		54193C851A58637000AF75CE /* ServiceEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C801A58637000AF75CE /* ServiceEntry.m */; };
 		54AAC0E31A5B7647007EDF40 /* FilePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 54AAC0E21A5B7647007EDF40 /* FilePath.m */; };
-		54CE01E01A64B8D10082FEA9 /* CustomCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 54CE01DE1A64B8D10082FEA9 /* CustomCarTableViewCell.m */; };
-		54CE01E11A64B8D10082FEA9 /* CustomCarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54CE01DF1A64B8D10082FEA9 /* CustomCarTableViewCell.xib */; };
 		54CE01E31A64CD9A0082FEA9 /* theStandardCarPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 54CE01E21A64CD9A0082FEA9 /* theStandardCarPhoto.png */; };
+		54CE01E61A655E780082FEA9 /* CustomCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 54CE01E51A655E780082FEA9 /* CustomCarTableViewCell.m */; };
 		54D00D3C1A558C28001F0FC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D3B1A558C28001F0FC4 /* main.m */; };
 		54D00D3F1A558C28001F0FC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D00D3E1A558C28001F0FC4 /* AppDelegate.m */; };
 		54D00D451A558C28001F0FC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54D00D431A558C28001F0FC4 /* Main.storyboard */; };
@@ -58,10 +57,9 @@
 		54193C801A58637000AF75CE /* ServiceEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceEntry.m; sourceTree = "<group>"; };
 		54AAC0E11A5B7647007EDF40 /* FilePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePath.h; sourceTree = "<group>"; };
 		54AAC0E21A5B7647007EDF40 /* FilePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePath.m; sourceTree = "<group>"; };
-		54CE01DD1A64B8D10082FEA9 /* CustomCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCarTableViewCell.h; sourceTree = "<group>"; };
-		54CE01DE1A64B8D10082FEA9 /* CustomCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCarTableViewCell.m; sourceTree = "<group>"; };
-		54CE01DF1A64B8D10082FEA9 /* CustomCarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCarTableViewCell.xib; sourceTree = "<group>"; };
 		54CE01E21A64CD9A0082FEA9 /* theStandardCarPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theStandardCarPhoto.png; sourceTree = "<group>"; };
+		54CE01E41A655E780082FEA9 /* CustomCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCarTableViewCell.h; sourceTree = "<group>"; };
+		54CE01E51A655E780082FEA9 /* CustomCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCarTableViewCell.m; sourceTree = "<group>"; };
 		54D00D361A558C28001F0FC4 /* MileageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MileageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D00D3A1A558C28001F0FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54D00D3B1A558C28001F0FC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -136,6 +134,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		54CE01E71A655E840082FEA9 /* Custom TableView Cells */ = {
+			isa = PBXGroup;
+			children = (
+				54CE01E41A655E780082FEA9 /* CustomCarTableViewCell.h */,
+				54CE01E51A655E780082FEA9 /* CustomCarTableViewCell.m */,
+			);
+			name = "Custom TableView Cells";
+			sourceTree = "<group>";
+		};
 		54D00D2D1A558C28001F0FC4 = {
 			isa = PBXGroup;
 			children = (
@@ -203,11 +210,9 @@
 		54D71CD41A6069E40017E3C1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				54CE01DD1A64B8D10082FEA9 /* CustomCarTableViewCell.h */,
-				54CE01DE1A64B8D10082FEA9 /* CustomCarTableViewCell.m */,
-				54CE01DF1A64B8D10082FEA9 /* CustomCarTableViewCell.xib */,
 				54D71CD51A606A160017E3C1 /* CarTableViewController.h */,
 				54D71CD61A606A160017E3C1 /* CarTableViewController.m */,
+				54CE01E71A655E840082FEA9 /* Custom TableView Cells */,
 				54019F171A63152300D2D045 /* CarDetailTVController.h */,
 				54019F181A63152300D2D045 /* CarDetailTVController.m */,
 				54D71CD81A606A320017E3C1 /* FuelTableViewController.h */,
@@ -317,7 +322,6 @@
 				54D00D4A1A558C28001F0FC4 /* LaunchScreen.xib in Resources */,
 				54CE01E31A64CD9A0082FEA9 /* theStandardCarPhoto.png in Resources */,
 				54D00D471A558C28001F0FC4 /* Images.xcassets in Resources */,
-				54CE01E11A64B8D10082FEA9 /* CustomCarTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,7 +379,7 @@
 				54AAC0E31A5B7647007EDF40 /* FilePath.m in Sources */,
 				54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */,
 				54D71CDD1A606A4A0017E3C1 /* OilChangeTableViewController.m in Sources */,
-				54CE01E01A64B8D10082FEA9 /* CustomCarTableViewCell.m in Sources */,
+				54CE01E61A655E780082FEA9 /* CustomCarTableViewCell.m in Sources */,
 				54193C821A58637000AF75CE /* FuelEntry.m in Sources */,
 				54193C841A58637000AF75CE /* OilChange.m in Sources */,
 				54019F191A63152400D2D045 /* CarDetailTVController.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "CarDetailTVController.h"
+#import "CarTableViewController.h"
 
 @interface CarDetailTVController ()
 
@@ -33,8 +34,12 @@
     _fuelCardPINTextField.text = _selectedCar.driverID;
     NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", _selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
-    _carPhotoImageView.image = [UIImage imageNamed:@"greenCarFull.png"];
+    PhotoObject *obj = [self.selectedCar.carPhoto firstObject];
     
+    _carPhotoImageView.image = [UIImage imageNamed:obj.imageName];
+    
+    NSLog(@"self.selectedCar.name = %@", self.selectedCar.name);
+    NSLog(@"self.activeCar.name = %@", self.currentActiveCar.name);
     /*@property (weak, nonatomic) IBOutlet UITextField *carNameTextField;
      @property (weak, nonatomic) IBOutlet UITextField *carMakeTextField;
      @property (weak, nonatomic) IBOutlet UITextField *carVINTextField;
@@ -122,13 +127,20 @@
 - (IBAction)toggleActiveVehicle:(UISwitch *)sender {
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
-    if (self.selectedCar.activeCar == NO) {
+    if ([self.carActiveVehicleSwitch isOn]) {
+        [realm commitWriteTransaction];
+        return;
+    } else {
+        [self.carActiveVehicleSwitch setOn:YES animated:YES];
         self.currentActiveCar.activeCar = NO;
         self.selectedCar.activeCar = YES;
-    } else {
-        self.carActiveVehicleSwitch.enabled = NO;
+        [realm commitWriteTransaction];
+        CarTableViewController *tc = (CarTableViewController*)[self presentingViewController];
+        tc.activeCar = self.selectedCar;
+//        self.currentActiveCar = self.selectedCar;
+        
     }
-    [realm commitWriteTransaction];
+    
 }
 
 - (IBAction)takeOrChoosePhoto:(id)sender {

@@ -8,7 +8,7 @@
 
 #import "CarTableViewController.h"
 #import "CarDetailTVController.h"
-#import "CustomCarTableViewCell.h"
+
 #import "Car.h"
 
 @interface CarTableViewController ()
@@ -30,18 +30,35 @@ static NSString *CellIdentifier = @"customCarCell";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.tabBarController.tabBar setTintColor:[UIColor redColor]];
-    self.tableView = (id)[self.view viewWithTag:17];
-    [self.tableView registerNib:[UINib nibWithNibName:@"CustomCarTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:CellIdentifier];
-    
+//    UITableView *tableView = (id)[self.view viewWithTag:17];
+//    [tableView registerClass:[CustomCarTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+//    
     //[self.tableView registerClass:[CustomCarTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     RLMResults *myCars = [Car allObjects];
+    RLMResults *activeCars = [myCars objectsWhere:@"activeCar = YES"];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    NSLog(@"active cars count = %lu", (unsigned long)activeCars.count);
+    
+    [realm beginWriteTransaction];
+    if (activeCars.count > 1) {
+        for (Car *c in activeCars) {
+            c.activeCar = 0;
+        }
+        _activeCar = [myCars objectAtIndex:0];
+    } else {
+        _activeCar = [activeCars lastObject];
+    }
+    [realm commitWriteTransaction];
     _cars = myCars;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,19 +152,46 @@ static NSString *CellIdentifier = @"customCarCell";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CustomCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.carActiveCarLabel.hidden = YES;
-    Car *car = [self.cars objectAtIndex:indexPath.row];
-    PhotoObject *img = [car.carPhoto firstObject];
-    NSString *miles = [NSString stringWithFormat:@"Current Miles: %@", @(car.currentMileage)];
-    cell.thumbnailImage.image = [UIImage imageNamed:img.imageName]; //carPhoto.firstObject is a string, that represents a path to an image, which is then loaded from the sandbox, not the database and hopefully displayed on the screen.
-    cell.carTextLabel.text = car.name;
-    cell.carDetailTextLabel.text = miles;
-    if (car.activeCar == YES) {
-        cell.carActiveCarLabel.hidden = NO;
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UILabel *activeCarLabel = (UILabel*)[cell.contentView viewWithTag:4];
+//    UILabel *carTextLabel = (UILabel*)[cell.contentView viewWithTag:2];
+//    UILabel *carDetailTextLabel = (UILabel*)[cell.contentView viewWithTag:3];
+//    UIImageView *thumbnailImageView = (UIImageView*)[cell.contentView viewWithTag:1];
+//    [cell addSubview:activeCarLabel];
+//    [cell addSubview:carTextLabel];
+//    [cell addSubview:carDetailTextLabel];
+    //cell.imageView.image = thumbnailImageView.image;
+    RLMResults *myCars = [Car allObjects];
+    self.cars = myCars;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        activeCarLabel.hidden = YES;
+        Car *car = [self.cars objectAtIndex:indexPath.row];
+        //PhotoObject *img = [car.carPhoto firstObject];
+        NSString *miles = [NSString stringWithFormat:@"Current Miles: %@", @(car.currentMileage)];
+        //cell.thumbnailImageView.image = [UIImage imageNamed:img.imageName]; //carPhoto.firstObject is a string, that represents a path to an image, which is then loaded from the sandbox, not the database and hopefully displayed on the screen.
+        cell.textLabel.text = car.name;
+        cell.detailTextLabel.text = miles;
+        if (car.activeCar == YES) {
+            activeCarLabel.hidden = NO;
+        }
+
+    } else {
+        activeCarLabel.hidden = YES;
+        Car *car = [self.cars objectAtIndex:indexPath.row];
+        //PhotoObject *img = [car.carPhoto firstObject];
+        NSString *miles = [NSString stringWithFormat:@"Current Miles: %@", @(car.currentMileage)];
+        //cell.thumbnailImageView.image = [UIImage imageNamed:img.imageName]; //carPhoto.firstObject is a string, that represents a path to an image, which is then loaded from the sandbox, not the database and hopefully displayed on the screen.
+        cell.textLabel.text = car.name;
+        cell.detailTextLabel.text = miles;
+        if (car.activeCar == YES) {
+            activeCarLabel.hidden = NO;
+        }
     }
+    
     return cell;
-    //[UIImage imageNamed:@"greenCar"];
+
 }
 
 
@@ -162,22 +206,36 @@ static NSString *CellIdentifier = @"customCarCell";
     }
 }
 
-
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//    UITableViewController *toViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"carDetailID"];
+////    UIStoryboardSegue *segue = [[UIStoryboardSegue segueWithIdentifier:@"showCarDetail" source:self destination:toViewController performHandler:nil]];
+//    
+//    UIStoryboardSegue *segue = [[UIStoryboardSegue alloc] initWithIdentifier:@"showCarDetail" source:self destination:toViewController];
+//
+//    [self.navigationController prepareForSegue:segue sender:self];
+//    //[segue perform];
+//}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // Delete the row from the data source
-        if (indexPath.row > 0) {
+        
             RLMResults *results = [Car allObjects];
             Car *objToDelete = [results objectAtIndex:indexPath.row];
             RLMRealm *realm = [RLMRealm defaultRealm];
-            [realm beginWriteTransaction];
-            [realm deleteObject:objToDelete];
-            [realm commitWriteTransaction];
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
+            if (objToDelete.activeCar != YES) {
+                [realm beginWriteTransaction];
+                [realm deleteObject:objToDelete];
+                [realm commitWriteTransaction];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                NSLog(@"You can't delete the active car!");
+            }
+            
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -211,7 +269,10 @@ static NSString *CellIdentifier = @"customCarCell";
     if ([segue.identifier isEqualToString:@"showCarDetail"]) {
         NSIndexPath *path = [self.tableView indexPathForCell:sender];
         CarDetailTVController *ctvc = [segue destinationViewController];
-        ctvc.currentActiveCar = self.activeCar;
+        RLMResults *myCars = [Car allObjects];
+        RLMResults *activeCars = [myCars objectsWhere:@"activeCar = YES"];
+        
+        ctvc.currentActiveCar = [activeCars lastObject];;
         
         Car *selectedCar = [self.cars objectAtIndex:path.row];
         ctvc.selectedCar = selectedCar;

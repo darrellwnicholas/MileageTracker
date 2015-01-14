@@ -147,5 +147,14 @@
 }
 
 - (IBAction)saveChanges:(id)sender {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    self.selectedCar.name = self.carNameTextField.text;
+    self.selectedCar.make = self.carMakeTextField.text;
+    self.selectedCar.VIN = self.carVINTextField.text;
+    self.selectedCar.currentMileage = [[NSString stringWithFormat:@"%@",self.carMileageTextField.text]integerValue];
+    self.selectedCar.driverID = self.fuelCardPINTextField.text;
+    self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];
+    [realm commitWriteTransaction];
 }
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Car.h"
+#import "CarTableViewController.h"
+#import "FuelDetailViewController.h"
 
 @interface FuelTableViewController : UITableViewController
-
+@property (strong, nonatomic) Car *activeCar;
 @end

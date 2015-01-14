@@ -64,7 +64,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="IZ5-Gb-cjD" detailTextLabel="cGO-AH-ErW" style="IBUITableViewCellStyleSubtitle" id="HRV-1T-zm5">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="fuelEntryCell" textLabel="IZ5-Gb-cjD" detailTextLabel="cGO-AH-ErW" style="IBUITableViewCellStyleSubtitle" id="HRV-1T-zm5">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HRV-1T-zm5" id="fuw-4w-uij">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -83,6 +83,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="hDo-PW-Xgq" kind="push" identifier="showFuelEntryDetail" id="xec-wK-D1R"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -92,13 +95,111 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Fuel" id="1BA-zU-az3"/>
                     <navigationItem key="navigationItem" title="Fuel Entries" id="9eg-ZC-Nln">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FIJ-K9-s8o"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FIJ-K9-s8o">
+                            <connections>
+                                <action selector="insertNewObject:" destination="lye-gc-djI" id="CAy-EC-jR9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ign-tf-dMo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1211" y="1670"/>
+        </scene>
+        <!--Fuel Detail View Controller-->
+        <scene sceneID="xYn-fL-jfw">
+            <objects>
+                <viewController id="hDo-PW-Xgq" customClass="FuelDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PEh-Ue-7sI"/>
+                        <viewControllerLayoutGuide type="bottom" id="BuP-lR-k3U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="edX-gW-n46">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Odometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewY-Qc-9Gs">
+                                <rect key="frame" x="121" y="85" width="92" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="JyD-sD-4Gt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfc-4l-bnY">
+                                <rect key="frame" x="127" y="114" width="66" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="ljr-bJ-Iti"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="26"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Nk-Po-cxs">
+                                <rect key="frame" x="142" y="324" width="42" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="hgC-J0-b9M"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November 21, 2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Y-nG-2RD">
+                                <rect key="frame" x="45" y="358" width="245" height="36"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="254652" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15m-kc-ALK">
+                                <rect key="frame" x="45" y="192" width="245" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="LKU-QW-hBH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driver ID/PIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etg-P2-dDc">
+                                <rect key="frame" x="102" y="158" width="117" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="eQd-7C-rLl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="trailing" secondItem="K9Y-nG-2RD" secondAttribute="trailing" id="6vH-vc-29X"/>
+                            <constraint firstItem="cfc-4l-bnY" firstAttribute="centerX" secondItem="etg-P2-dDc" secondAttribute="centerX" id="AUa-zu-qDr"/>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="centerX" secondItem="ewY-Qc-9Gs" secondAttribute="centerX" id="AyY-jz-hZy"/>
+                            <constraint firstItem="7Nk-Po-cxs" firstAttribute="leading" secondItem="edX-gW-n46" secondAttribute="leading" constant="142" id="Mtz-ul-PfV"/>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="top" secondItem="etg-P2-dDc" secondAttribute="bottom" constant="8" symbolic="YES" id="N4r-ee-ml8"/>
+                            <constraint firstItem="cfc-4l-bnY" firstAttribute="top" secondItem="ewY-Qc-9Gs" secondAttribute="bottom" constant="3" id="NKR-RL-7q4"/>
+                            <constraint firstItem="etg-P2-dDc" firstAttribute="centerX" secondItem="edX-gW-n46" secondAttribute="centerX" id="Vq4-wj-Fms"/>
+                            <constraint firstItem="etg-P2-dDc" firstAttribute="top" secondItem="cfc-4l-bnY" secondAttribute="bottom" constant="8" symbolic="YES" id="YOx-hH-3xB"/>
+                            <constraint firstItem="K9Y-nG-2RD" firstAttribute="top" secondItem="7Nk-Po-cxs" secondAttribute="bottom" constant="8" symbolic="YES" id="YrZ-pu-eFy"/>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="leading" secondItem="edX-gW-n46" secondAttribute="leadingMargin" constant="29" id="ZbX-9M-Xdt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="15m-kc-ALK" secondAttribute="trailing" constant="14" id="bct-QT-fT6"/>
+                            <constraint firstItem="ewY-Qc-9Gs" firstAttribute="top" secondItem="PEh-Ue-7sI" secondAttribute="bottom" constant="21" id="cMr-Wp-XTH"/>
+                            <constraint firstItem="7Nk-Po-cxs" firstAttribute="top" secondItem="15m-kc-ALK" secondAttribute="bottom" constant="96" id="fRb-8U-zkx"/>
+                            <constraint firstItem="K9Y-nG-2RD" firstAttribute="leading" secondItem="15m-kc-ALK" secondAttribute="leading" id="nze-jc-0gA"/>
+                            <constraint firstItem="BuP-lR-k3U" firstAttribute="top" secondItem="K9Y-nG-2RD" secondAttribute="bottom" constant="174" id="s1F-gD-LqJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kz5-kD-lwX"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="K9Y-nG-2RD" id="ubO-Sa-M16"/>
+                        <outlet property="driverIDLabel" destination="15m-kc-ALK" id="cE3-Ax-Ycz"/>
+                        <outlet property="mileageLabel" destination="cfc-4l-bnY" id="xJz-rH-Kzm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BF5-8P-2hv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1589" y="1670"/>
         </scene>
         <!--Other Service-->
         <scene sceneID="EQE-3T-Dee">
@@ -216,7 +317,7 @@
         <!--Vehicles-->
         <scene sceneID="eCn-I0-yUG">
             <objects>
-                <tableViewController id="iEx-lx-A8m" customClass="CarTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="VehicleList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iEx-lx-A8m" customClass="CarTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" tag="17" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qwi-G0-vwd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -269,7 +370,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Vehicle" id="cl1-dM-0IE"/>
                     <navigationItem key="navigationItem" title="Vehicles" id="imN-EF-fUN">
-                        <barButtonItem key="leftBarButtonItem" image="settings" style="plain" id="2xG-wf-gVM">
+                        <barButtonItem key="leftBarButtonItem" image="settings" id="2xG-wf-gVM">
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="6kk-6I-vOm">
@@ -309,7 +410,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ed-TR-8KM">
                                                     <rect key="frame" x="126" y="8" width="186" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -328,7 +429,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SeE-K1-j4b">
                                                     <rect key="frame" x="63" y="8" width="249" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -347,7 +448,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6gz-LH-mME">
                                                     <rect key="frame" x="49" y="8" width="263" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -366,7 +467,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="poB-Vp-csB">
                                                     <rect key="frame" x="55" y="7" width="97" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -405,7 +506,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nxY-MR-YMT">
                                                     <rect key="frame" x="143" y="8" width="169" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -424,7 +525,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XMY-hi-ZHM">
                                                     <rect key="frame" x="200" y="8" width="112" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" keyboardType="namePhonePad" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>

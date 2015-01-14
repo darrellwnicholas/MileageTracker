@@ -52,6 +52,7 @@ static NSString *CellIdentifier = @"customCarCell";
     [realm commitWriteTransaction];
     _cars = myCars;
     
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

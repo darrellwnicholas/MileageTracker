@@ -13,6 +13,7 @@
 		54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7C1A58637000AF75CE /* MonthlyMilesEntry.m */; };
 		54193C841A58637000AF75CE /* OilChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C7E1A58637000AF75CE /* OilChange.m */; };
 		54193C851A58637000AF75CE /* ServiceEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54193C801A58637000AF75CE /* ServiceEntry.m */; };
+		544E10C51A66452C0056C093 /* FuelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 544E10C41A66452C0056C093 /* FuelDetailViewController.m */; };
 		54AAC0E31A5B7647007EDF40 /* FilePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 54AAC0E21A5B7647007EDF40 /* FilePath.m */; };
 		54CE01E31A64CD9A0082FEA9 /* theStandardCarPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 54CE01E21A64CD9A0082FEA9 /* theStandardCarPhoto.png */; };
 		54CE01E61A655E780082FEA9 /* CustomCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 54CE01E51A655E780082FEA9 /* CustomCarTableViewCell.m */; };
@@ -55,6 +56,8 @@
 		54193C7E1A58637000AF75CE /* OilChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OilChange.m; sourceTree = "<group>"; };
 		54193C7F1A58637000AF75CE /* ServiceEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceEntry.h; sourceTree = "<group>"; };
 		54193C801A58637000AF75CE /* ServiceEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceEntry.m; sourceTree = "<group>"; };
+		544E10C31A66452C0056C093 /* FuelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuelDetailViewController.h; sourceTree = "<group>"; };
+		544E10C41A66452C0056C093 /* FuelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuelDetailViewController.m; sourceTree = "<group>"; };
 		54AAC0E11A5B7647007EDF40 /* FilePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePath.h; sourceTree = "<group>"; };
 		54AAC0E21A5B7647007EDF40 /* FilePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePath.m; sourceTree = "<group>"; };
 		54CE01E21A64CD9A0082FEA9 /* theStandardCarPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theStandardCarPhoto.png; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 				54019F181A63152300D2D045 /* CarDetailTVController.m */,
 				54D71CD81A606A320017E3C1 /* FuelTableViewController.h */,
 				54D71CD91A606A320017E3C1 /* FuelTableViewController.m */,
+				544E10C31A66452C0056C093 /* FuelDetailViewController.h */,
+				544E10C41A66452C0056C093 /* FuelDetailViewController.m */,
 				54D71CDB1A606A4A0017E3C1 /* OilChangeTableViewController.h */,
 				54D71CDC1A606A4A0017E3C1 /* OilChangeTableViewController.m */,
 				54D71CDE1A606A610017E3C1 /* ServiceTableViewController.h */,
@@ -375,6 +380,7 @@
 				54193C811A58637000AF75CE /* Car.m in Sources */,
 				54D71CDA1A606A320017E3C1 /* FuelTableViewController.m in Sources */,
 				54193C851A58637000AF75CE /* ServiceEntry.m in Sources */,
+				544E10C51A66452C0056C093 /* FuelDetailViewController.m in Sources */,
 				54D71CD71A606A160017E3C1 /* CarTableViewController.m in Sources */,
 				54AAC0E31A5B7647007EDF40 /* FilePath.m in Sources */,
 				54193C831A58637000AF75CE /* MonthlyMilesEntry.m in Sources */,

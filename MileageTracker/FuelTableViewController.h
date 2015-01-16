@@ -11,6 +11,6 @@
 #import "CarTableViewController.h"
 #import "FuelDetailViewController.h"
 
-@interface FuelTableViewController : UITableViewController
-@property (strong, nonatomic) Car *activeCar;
+@interface FuelTableViewController : UITableViewController //<UITabBarControllerDelegate>
+@property Car *activeCar;
 @end

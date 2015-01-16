@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1DE98B8F-B96B-4FD8-964D-5172C3A6A290</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MileageTracker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>27BA724D1C3A6A6D0E331A941D8B7E7DBCD96CA1</key>
+		<string>https://github.com/darrellwnicholas/MileageTracker.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MileageTracker.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>27BA724D1C3A6A6D0E331A941D8B7E7DBCD96CA1</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/darrellwnicholas/MileageTracker.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>27BA724D1C3A6A6D0E331A941D8B7E7DBCD96CA1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>27BA724D1C3A6A6D0E331A941D8B7E7DBCD96CA1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MileageTracker</string>
+		</dict>
+	</array>
+</dict>
+</plist>

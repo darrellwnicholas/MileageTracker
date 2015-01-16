@@ -15,7 +15,7 @@
 
 static NSString *CellIdentifier = @"fuelEntryCell";
 
-@implementation FuelTableViewController
+@implementation FuelTableViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,10 +25,21 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UINavigationController *nav = [self.tabBarController.viewControllers objectAtIndex:0];
-    CarTableViewController *c = [nav.viewControllers firstObject];
-    self.activeCar = c.activeCar;
-    NSLog(@"active car name = %@", c.activeCar.name);
+    
+    
+    
+    
+}
+
+- (NSString *)activeCarID {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    self.title = self.activeCar.name;
+//    [self.tableView setNeedsDisplay];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,7 +81,7 @@ static NSString *CellIdentifier = @"fuelEntryCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return self.activeCar.fuelEntries.count;
+    return [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]].fuelEntries.count;
 }
 
 
@@ -78,8 +89,9 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-    
-    RLMResults *myEntries = [self.activeCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+    Car *aCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
+    self.activeCar = aCar;
+    RLMResults *myEntries = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         FuelEntry *entry = [myEntries objectAtIndex:indexPath.row];
@@ -111,25 +123,38 @@ static NSString *CellIdentifier = @"fuelEntryCell";
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        Car *aCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
+        RLMResults *myEntries = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        FuelEntry *objToDelete = [myEntries objectAtIndex:indexPath.row];
+        [realm beginWriteTransaction];
+        [realm deleteObject:objToDelete];
+        [realm commitWriteTransaction];
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        RLMResults *newResults = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+        FuelEntry *newestEntry = [newResults objectAtIndex:0];
+        [realm beginWriteTransaction];
+        aCar.currentMileage = [newestEntry mileage];
+        [realm commitWriteTransaction];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

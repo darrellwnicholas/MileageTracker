@@ -29,11 +29,12 @@
     } else {
         // TutorialComplete value is NO or doesn't exist yet
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         RLMRealm *realm = [RLMRealm defaultRealm];
         Car *car = [[Car alloc] init];
+        
         car.name = @"My Vehicle";
-        car.activeCar = @YES;
+        
         NSString *nameOfCar = @"theStandardCarPhoto.png";
         PhotoObject *defaultCarPhoto = [[PhotoObject alloc] init];
         defaultCarPhoto.imageName = nameOfCar;
@@ -46,6 +47,9 @@
         //defaultCarPhoto.imageName = imageURL;
         [car.carPhoto addObject:defaultCarPhoto];
         [realm commitWriteTransaction];
+        [[NSUserDefaults standardUserDefaults] setValue:car.uuid forKey:@"activeCar"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         /*
          Car *car = [[Car alloc] init];
          

@@ -10,25 +10,43 @@
 #import "CarTableViewController.h"
 
 @interface CarDetailTVController ()
-
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation CarDetailTVController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:singleTap];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // UITextFieldDelegate assignments
+    _carNameTextField.delegate = self;
+    _carMakeTextField.delegate = self;
+    _carVINTextField.delegate = self;
+    _carYearTextField.delegate = self;
+    _carMileageTextField.delegate = self;
+    _fuelCardPINTextField.delegate = self;
+    _carOilChangeMileageTextField.delegate = self;
+    
+    // Textfield value assignments
     _carNameTextField.text  = _selectedCar.name;
     _carMakeTextField.text  = _selectedCar.make;
     _carVINTextField.text   = _selectedCar.VIN;
     NSString *yearString = [NSString stringWithFormat:@"%li", _selectedCar.year];
     _carYearTextField.text  = yearString;
-    _carActiveVehicleSwitch.on = _selectedCar.activeCar;
+    if ([self.selectedCar.uuid isEqualToString:[self activeCarID]]) {
+        _activeVehicleLabel.text = @"Yes";
+    } else {
+        _activeVehicleLabel.text = @"No";
+    }
     NSString *milesString = [NSString stringWithFormat:@"%li", _selectedCar.currentMileage];
     _carMileageTextField.text = milesString;
     _fuelCardPINTextField.text = _selectedCar.driverID;
@@ -40,15 +58,23 @@
     
     NSLog(@"self.selectedCar.name = %@", self.selectedCar.name);
     NSLog(@"self.activeCar.name = %@", self.currentActiveCar.name);
-    /*@property (weak, nonatomic) IBOutlet UITextField *carNameTextField;
-     @property (weak, nonatomic) IBOutlet UITextField *carMakeTextField;
-     @property (weak, nonatomic) IBOutlet UITextField *carVINTextField;
-     @property (weak, nonatomic) IBOutlet UITextField *carYearTextField;
-     @property (weak, nonatomic) IBOutlet UISwitch *carActiveVehicleSwitch;
-     @property (weak, nonatomic) IBOutlet UITextField *carMileageTextField;
-     @property (weak, nonatomic) IBOutlet UITextField *fuelCardPINTextField;
-     @property (weak, nonatomic) IBOutlet UITextField *carOilChangeMileageTextField;
-     @property (weak, nonatomic) IBOutlet UIImageView *carPhotoImageView;*/
+
+}
+- (NSString *)activeCarID {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
+}
+
+-(BOOL) textFieldShouldReturn: (UITextField *) textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,23 +150,11 @@
 }
 */
 
-- (IBAction)toggleActiveVehicle:(UISwitch *)sender {
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    if ([self.carActiveVehicleSwitch isOn]) {
-        [realm commitWriteTransaction];
-        return;
-    } else {
-        [self.carActiveVehicleSwitch setOn:YES animated:YES];
-        self.currentActiveCar.activeCar = NO;
-        self.selectedCar.activeCar = YES;
-        [realm commitWriteTransaction];
-        CarTableViewController *tc = (CarTableViewController*)[self presentingViewController];
-        tc.activeCar = self.selectedCar;
-//        self.currentActiveCar = self.selectedCar;
-        
-    }
-    
+
+- (IBAction)makeVehicleActive:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setValue:self.selectedCar.uuid forKey:@"activeCar"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    self.activeVehicleLabel.text = @"Yes";
 }
 
 - (IBAction)takeOrChoosePhoto:(id)sender {
@@ -156,5 +170,6 @@
     self.selectedCar.driverID = self.fuelCardPINTextField.text;
     self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];
     [realm commitWriteTransaction];
+    
 }
 @end

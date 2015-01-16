@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface CarDetailTVController : UITableViewController
+@interface CarDetailTVController : UITableViewController <UITextFieldDelegate>
 @property Car *selectedCar;
 @property Car *currentActiveCar;
 
@@ -17,14 +17,15 @@
 @property (weak, nonatomic) IBOutlet UITextField *carMakeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *carVINTextField;
 @property (weak, nonatomic) IBOutlet UITextField *carYearTextField;
-@property (weak, nonatomic) IBOutlet UISwitch *carActiveVehicleSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *activeVehicleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *carMileageTextField;
 @property (weak, nonatomic) IBOutlet UITextField *fuelCardPINTextField;
 @property (weak, nonatomic) IBOutlet UITextField *carOilChangeMileageTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *carPhotoImageView;
 
 
-- (IBAction)toggleActiveVehicle:(UISwitch *)sender;
+- (IBAction)makeVehicleActive:(id)sender;
+
 - (IBAction)takeOrChoosePhoto:(id)sender;
 - (IBAction)saveChanges:(id)sender;
 

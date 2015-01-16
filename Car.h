@@ -21,11 +21,12 @@ RLM_ARRAY_TYPE(ServiceEntry)
 
 
 @interface Car : RLMObject
+@property NSString *uuid;
 @property NSString *name;
 @property NSString *make;
 @property NSString *VIN;
 @property NSInteger year;
-@property BOOL activeCar;
+//@property BOOL activeCar;
 @property NSInteger currentMileage;
 @property NSString *driverID;
 @property NSInteger oilChangeMiles;
@@ -37,5 +38,6 @@ RLM_ARRAY_TYPE(ServiceEntry)
 @property RLMArray<MonthlyMilesEntry> *monthlyMilesEntries;
 
 + (NSDictionary *)defaultPropertyValues;
++ (NSString *)primaryKey;
 
 @end

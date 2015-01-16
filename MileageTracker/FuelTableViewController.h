@@ -12,5 +12,5 @@
 #import "FuelDetailViewController.h"
 
 @interface FuelTableViewController : UITableViewController //<UITabBarControllerDelegate>
-@property Car *activeCar;
+                                                           //@property Car *activeCar;
 @end

@@ -16,9 +16,10 @@
                                     @"make"             : @"vehicle make",
                                     @"VIN"              : @"VIN Number",
                                     @"year"             : @2015,
-                                    @"currentMileage"   : @10000,
+                                    @"currentMileage"   : @1,
                                     @"driverID"         : @"0000",
                                     @"oilChangeMiles"   : @3000,
+                                    @"nextOilChange"    : @3001,
                                     };
     return defaultValues;
 }

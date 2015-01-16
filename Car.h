@@ -30,6 +30,7 @@ RLM_ARRAY_TYPE(ServiceEntry)
 @property NSInteger currentMileage;
 @property NSString *driverID;
 @property NSInteger oilChangeMiles;
+@property NSInteger nextOilChange;
 
 @property RLMArray<PhotoObject> *carPhoto;
 @property RLMArray<OilChange> *oilChanges;

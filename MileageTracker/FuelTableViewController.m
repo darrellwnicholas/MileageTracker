@@ -50,6 +50,8 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Insert Fuel Entry" message:@"Enter Odomoter" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         RLMRealm *realm = [RLMRealm defaultRealm];
+        Car *activeCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
+        
         FuelEntry *entry = [[FuelEntry alloc] init];
         UITextField *textField = alert.textFields[0];
         entry.mileage = [textField.text integerValue];
@@ -57,8 +59,8 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         
         [realm beginWriteTransaction];
 //        [realm addObject:entry];
-        self.activeCar.currentMileage = entry.mileage;
-        [self.activeCar.fuelEntries addObject:entry];
+        activeCar.currentMileage = entry.mileage;
+        [activeCar.fuelEntries addObject:entry];
         [realm commitWriteTransaction];
         [self.tableView reloadData];
     }];
@@ -89,9 +91,9 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-    Car *aCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
-    self.activeCar = aCar;
-    RLMResults *myEntries = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+    Car *activeCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
+    
+    RLMResults *myEntries = [activeCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         FuelEntry *entry = [myEntries objectAtIndex:indexPath.row];
@@ -180,8 +182,9 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     if ([segue.identifier isEqualToString:@"showFuelEntryDetail"]) {
         NSIndexPath *path = [self.tableView indexPathForCell:sender];
         FuelDetailViewController *fdvc = [segue destinationViewController];
-        RLMResults *myEntries = [self.activeCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
-        fdvc.activeCar = self.activeCar;
+        Car *aCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
+        RLMResults *myEntries = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+        fdvc.activeCar = aCar;
         fdvc.selectedEntry = [myEntries objectAtIndex:path.row];
         
         

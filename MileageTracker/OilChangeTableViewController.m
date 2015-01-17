@@ -25,6 +25,12 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIImage *background = [UIImage imageNamed:@"oilTableBG"];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:background];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.alpha = 0.2;
+    [self.tableView setBackgroundView:imageView];
 }
 
 - (NSString *)activeCarID {

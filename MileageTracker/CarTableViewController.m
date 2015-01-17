@@ -34,6 +34,12 @@ static NSString *CellIdentifier = @"customCarCell";
 //    [tableView registerClass:[CustomCarTableViewCell class] forCellReuseIdentifier:CellIdentifier];
 //    
     //[self.tableView registerClass:[CustomCarTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    UIImage *background = [UIImage imageNamed:@"carTableBG"];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:background];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.alpha = 0.2;
+    [self.tableView setBackgroundView:imageView];
     
     RLMResults *myCars = [Car allObjects];
     

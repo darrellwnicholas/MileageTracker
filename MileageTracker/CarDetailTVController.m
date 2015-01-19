@@ -40,17 +40,17 @@
     _carNameTextField.text  = _selectedCar.name;
     _carMakeTextField.text  = _selectedCar.make;
     _carVINTextField.text   = _selectedCar.VIN;
-    NSString *yearString = [NSString stringWithFormat:@"%li", _selectedCar.year];
+    NSString *yearString = [NSString stringWithFormat:@"%li", (long)_selectedCar.year];
     _carYearTextField.text  = yearString;
     if ([self.selectedCar.uuid isEqualToString:[self activeCarID]]) {
         _activeVehicleLabel.text = @"Yes";
     } else {
         _activeVehicleLabel.text = @"No";
     }
-    NSString *milesString = [NSString stringWithFormat:@"%li", _selectedCar.currentMileage];
+    NSString *milesString = [NSString stringWithFormat:@"%li", (long)_selectedCar.currentMileage];
     _carMileageTextField.text = milesString;
     _fuelCardPINTextField.text = _selectedCar.driverID;
-    NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", _selectedCar.oilChangeMiles];
+    NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", (long)_selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
     PhotoObject *obj = [self.selectedCar.carPhoto firstObject];
     

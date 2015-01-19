@@ -110,7 +110,7 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         formatter.doesRelativeDateFormatting = YES;
         
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", entry.mileage];
+        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
     } else {
         FuelEntry *entry = [myEntries objectAtIndex:indexPath.row];
@@ -122,7 +122,7 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         formatter.doesRelativeDateFormatting = YES;
         
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", entry.mileage];
+        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
     }
     

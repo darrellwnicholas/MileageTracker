@@ -126,7 +126,7 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
         formatter.doesRelativeDateFormatting = YES;
         
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", entry.mileage];
+        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
         priceLabel.text = [NSString stringWithFormat:@"$%.02f", entry.price];
         locationLabel.text = entry.serviceLocation;
@@ -140,7 +140,7 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
         formatter.doesRelativeDateFormatting = YES;
         
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", entry.mileage];
+        cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
         priceLabel.text = [NSString stringWithFormat:@"$%.02f", entry.price];
         locationLabel.text = entry.serviceLocation;

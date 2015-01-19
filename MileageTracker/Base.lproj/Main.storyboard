@@ -19,6 +19,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3vW-0F-Kli" id="byG-fa-1kL">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -147,12 +148,6 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November 21, 2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Y-nG-2RD">
-                                <rect key="frame" x="38" y="270" width="245" height="36"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driver ID/PIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etg-P2-dDc">
                                 <rect key="frame" x="102" y="158" width="117" height="26"/>
                                 <constraints>
@@ -171,6 +166,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November 21, 2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K9Y-nG-2RD">
+                                <rect key="frame" x="68" y="270" width="184" height="28"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -179,16 +180,15 @@
                             <constraint firstItem="etg-P2-dDc" firstAttribute="top" secondItem="cfc-4l-bnY" secondAttribute="bottom" constant="8" symbolic="YES" id="4ee-Dk-gq7"/>
                             <constraint firstItem="cfc-4l-bnY" firstAttribute="centerX" secondItem="edX-gW-n46" secondAttribute="centerX" id="67j-dH-R9B"/>
                             <constraint firstItem="15m-kc-ALK" firstAttribute="leading" secondItem="edX-gW-n46" secondAttribute="leadingMargin" constant="22" id="FA0-tP-EkX"/>
-                            <constraint firstItem="BuP-lR-k3U" firstAttribute="top" secondItem="K9Y-nG-2RD" secondAttribute="bottom" constant="262" id="JMb-c9-Bz0"/>
                             <constraint firstItem="ewY-Qc-9Gs" firstAttribute="top" secondItem="PEh-Ue-7sI" secondAttribute="bottom" constant="16" id="Pbv-Ty-NXo"/>
                             <constraint firstItem="etg-P2-dDc" firstAttribute="centerX" secondItem="cfc-4l-bnY" secondAttribute="centerX" id="UVJ-0M-B4z"/>
                             <constraint firstItem="ewY-Qc-9Gs" firstAttribute="centerX" secondItem="cfc-4l-bnY" secondAttribute="centerX" id="Wwo-Ka-g4M"/>
                             <constraint firstItem="15m-kc-ALK" firstAttribute="top" secondItem="etg-P2-dDc" secondAttribute="bottom" constant="8" symbolic="YES" id="fdR-dZ-dTK"/>
                             <constraint firstItem="7Nk-Po-cxs" firstAttribute="top" secondItem="15m-kc-ALK" secondAttribute="bottom" constant="8" symbolic="YES" id="h7J-qq-noi"/>
                             <constraint firstItem="15m-kc-ALK" firstAttribute="centerX" secondItem="7Nk-Po-cxs" secondAttribute="centerX" id="stM-MI-OCj"/>
-                            <constraint firstItem="15m-kc-ALK" firstAttribute="trailing" secondItem="K9Y-nG-2RD" secondAttribute="trailing" id="xAw-WT-wHa"/>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="trailing" secondItem="K9Y-nG-2RD" secondAttribute="trailing" constant="31" id="xAw-WT-wHa"/>
                             <constraint firstItem="K9Y-nG-2RD" firstAttribute="top" secondItem="7Nk-Po-cxs" secondAttribute="bottom" constant="8" symbolic="YES" id="xts-Tz-mwZ"/>
-                            <constraint firstItem="15m-kc-ALK" firstAttribute="leading" secondItem="K9Y-nG-2RD" secondAttribute="leading" id="yc6-UC-eFu"/>
+                            <constraint firstItem="15m-kc-ALK" firstAttribute="leading" secondItem="K9Y-nG-2RD" secondAttribute="leading" constant="-30" id="yc6-UC-eFu"/>
                             <constraint firstItem="cfc-4l-bnY" firstAttribute="leading" secondItem="edX-gW-n46" secondAttribute="leadingMargin" constant="64" id="zds-C7-1fw"/>
                         </constraints>
                     </view>
@@ -217,6 +217,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VfX-yT-Yt6" id="ndR-iy-UYI">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -301,6 +302,7 @@
                                         <constraint firstItem="9dY-Hd-4g2" firstAttribute="top" secondItem="apI-6M-kKh" secondAttribute="topMargin" constant="18" id="kfo-aN-xaz"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -399,6 +401,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="D6y-4V-6RI" secondAttribute="trailing" constant="16" id="qzc-5q-hfe"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="cmH-7F-hUs" kind="push" identifier="showCarDetail" id="V1M-Wh-IBH"/>
                                 </connections>

@@ -100,8 +100,45 @@ static NSString *CellIdentifier = @"customCarCell";
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-        return @"Vehicle List";
+        return @"";
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 22.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    //CGRectMake(0,200,300,244)]
+    UIView *tempView=[[UIView alloc]initWithFrame:CGRectMake(0, 200, 300, 22)];
+    tempView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    
+    
+    UILabel *tempLabel=[[UILabel alloc]initWithFrame:CGRectMake(15,0,300,22)];
+    tempLabel.backgroundColor=[UIColor clearColor];
+    
+    
+    //tempLabel.shadowColor = [UIColor blackColor];
+    //tempLabel.shadowOffset = CGSizeMake(0,2);
+    tempLabel.textColor = [UIColor redColor]; //here you can change the text color of header.
+    //tempLabel.font = [UIFont fontWithName:@"Avenir Next" size:18.0];
+    NSDictionary *attributes = @{@"NSFontFamilyAttribute": @"Avenir Next",
+                                 @"NSFontStyle": @"Light",
+                                 };
+    
+    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:attributes];
+    tempLabel.font = [UIFont fontWithDescriptor:fontDescriptor size:18.0];
+    NSString *debbersString = @"Vehicle List";
+    tempLabel.text = debbersString; // variable named after my wife
+    tempLabel.textColor = [UIColor redColor];
+    
+    
+    //Avenir Next Regular 16.0
+    [tempView addSubview:tempLabel];
+    
+    return tempView;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

@@ -13,6 +13,8 @@
 + (NSDictionary *)defaultPropertyValues {
     NSDictionary *defaultValues = @{
                                     @"date"  : [NSDate date],
+                                    @"price"            : @0.0,
+                                    @"serviceLocation"  : @"",
                                     @"notes" : @"",
                                     };
     return defaultValues;

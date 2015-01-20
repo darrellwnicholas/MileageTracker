@@ -55,10 +55,12 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
         entry.mileage = [textField1.text integerValue];
         entry.price = [textField2.text doubleValue];
         entry.serviceLocation = textField3.text;
-        //entry.date = [NSDate date]; //this is done with default entry from model
+
         
         [realm beginWriteTransaction];
-        //        [realm addObject:entry];
+
+        [[NSUserDefaults standardUserDefaults] setInteger:activeCar.currentMileage forKey:@"LastKnownMileage"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         activeCar.currentMileage = entry.mileage;
         [activeCar.oilChanges addObject:entry];
         [realm commitWriteTransaction];
@@ -67,21 +69,17 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad; //UIKeyboardTypeDefault
-        textField.placeholder = @"mileage";
+        textField.placeholder = @"Enter Odometer";
     }];
     //might not put this in..----
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.keyboardType = UIKeyboardTypeDecimalPad; //UIKeyboardTypeDefault
-        UIImageView *dollar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
-        [textField.leftView addSubview:dollar];
         textField.leftViewMode = YES;
-        textField.placeholder = @"price";
+        textField.placeholder = @"Price (ex. 12.34)";
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.keyboardType = UIKeyboardTypeDefault; //UIKeyboardTypeDefault
         textField.autocapitalizationType = YES;
-        UIImageView *dollar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
-        [textField.leftView addSubview:dollar];
         textField.placeholder = @"Service Facility";
     }];
     //to here ----
@@ -101,6 +99,45 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]].oilChanges.count;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 22.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    //CGRectMake(0,200,300,244)]
+    UIView *tempView=[[UIView alloc]initWithFrame:CGRectMake(0, 200, 300, 22)];
+    tempView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    
+    
+    UILabel *tempLabel=[[UILabel alloc]initWithFrame:CGRectMake(15,0,300,22)];
+    tempLabel.backgroundColor=[UIColor clearColor];
+    
+    
+    //tempLabel.shadowColor = [UIColor blackColor];
+    //tempLabel.shadowOffset = CGSizeMake(0,2);
+    tempLabel.textColor = [UIColor redColor]; //here you can change the text color of header.
+    //tempLabel.font = [UIFont fontWithName:@"Avenir Next" size:18.0];
+    NSDictionary *attributes = @{@"NSFontFamilyAttribute": @"Avenir Next",
+                                 @"NSFontStyle": @"Light",
+                                 };
+    
+    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:attributes];
+    tempLabel.font = [UIFont fontWithDescriptor:fontDescriptor size:18.0];
+    NSString *debbersString = [NSString stringWithFormat:@"%@ Oil Changes", [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]].name];
+    tempLabel.text = debbersString; // variable named after my wife
+    tempLabel.textColor = [UIColor redColor];
+    
+    
+    //Avenir Next Regular 16.0
+    [tempView addSubview:tempLabel];
+    
+    return tempView;
 }
 
 
@@ -162,20 +199,19 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
         Car *aCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
         RLMResults *myEntries = [aCar.oilChanges sortedResultsUsingProperty:@"date" ascending:NO];
         RLMRealm *realm = [RLMRealm defaultRealm];
         FuelEntry *objToDelete = [myEntries objectAtIndex:indexPath.row];
         [realm beginWriteTransaction];
+        if (indexPath.row == 0) {
+            aCar.currentMileage = [[NSUserDefaults standardUserDefaults] integerForKey:@"LastKnownMileage"];
+        }
         [realm deleteObject:objToDelete];
         [realm commitWriteTransaction];
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        RLMResults *newResults = [aCar.oilChanges sortedResultsUsingProperty:@"date" ascending:NO];
-//        FuelEntry *newestEntry = [newResults objectAtIndex:0];
-//        [realm beginWriteTransaction];
-//        aCar.currentMileage = [newestEntry mileage];
-//        [realm commitWriteTransaction];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

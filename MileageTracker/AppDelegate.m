@@ -48,6 +48,8 @@
         [car.carPhoto addObject:defaultCarPhoto];
         [realm commitWriteTransaction];
         [[NSUserDefaults standardUserDefaults] setValue:car.uuid forKey:@"activeCar"];
+        [[NSUserDefaults standardUserDefaults] setInteger:car.currentMileage forKey:@"LastKnownMileage"];
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         /*

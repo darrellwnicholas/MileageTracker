@@ -30,6 +30,10 @@
     [self.tableView setBackgroundView:imageView];
 }
 
+- (NSString *)activeCarID {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

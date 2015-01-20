@@ -153,6 +153,7 @@
 
 - (IBAction)makeVehicleActive:(id)sender {
     [[NSUserDefaults standardUserDefaults] setValue:self.selectedCar.uuid forKey:@"activeCar"];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.selectedCar.currentMileage forKey:@"LastKnownMileage"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.activeVehicleLabel.text = @"Yes";
 }
@@ -161,15 +162,28 @@
 }
 
 - (IBAction)saveChanges:(id)sender {
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    self.selectedCar.name = self.carNameTextField.text;
-    self.selectedCar.make = self.carMakeTextField.text;
-    self.selectedCar.VIN = self.carVINTextField.text;
-    self.selectedCar.currentMileage = [[NSString stringWithFormat:@"%@",self.carMileageTextField.text]integerValue];
-    self.selectedCar.driverID = self.fuelCardPINTextField.text;
-    self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];
-    [realm commitWriteTransaction];
     
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Save" message:@"Save all changes?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        self.selectedCar.name = self.carNameTextField.text;
+        self.selectedCar.make = self.carMakeTextField.text;
+        self.selectedCar.VIN = self.carVINTextField.text;
+        self.selectedCar.currentMileage = [[NSString stringWithFormat:@"%@",self.carMileageTextField.text]integerValue];
+        self.selectedCar.driverID = self.fuelCardPINTextField.text;
+        self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];
+        [realm commitWriteTransaction];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
+     
 @end

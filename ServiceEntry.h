@@ -13,6 +13,8 @@
 
 @property NSDate *date;
 @property NSInteger mileage;
+@property double price;
+@property NSString *serviceLocation;
 @property NSString *notes;
 @property RLMArray<PhotoObject> *receipts;
 

@@ -10,10 +10,11 @@
 
 
 @interface FuelTableViewController ()
-
+//@property NSInteger tempMileage;
 @end
 
 static NSString *CellIdentifier = @"fuelEntryCell";
+
 
 @implementation FuelTableViewController 
 
@@ -32,6 +33,7 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.alpha = 0.2;
     [self.tableView setBackgroundView:imageView];
+//    _tempMileage = 0;
     
     
 }
@@ -64,6 +66,10 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         
         [realm beginWriteTransaction];
 //        [realm addObject:entry];
+        // Do this on every page
+        [[NSUserDefaults standardUserDefaults] setInteger:activeCar.currentMileage forKey:@"LastKnownMileage"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        //--to here--//
         activeCar.currentMileage = entry.mileage;
         [activeCar.fuelEntries addObject:entry];
         [realm commitWriteTransaction];
@@ -91,6 +97,45 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     return [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]].fuelEntries.count;
 }
 
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 22.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    //CGRectMake(0,200,300,244)]
+    UIView *tempView=[[UIView alloc]initWithFrame:CGRectMake(0, 200, 300, 22)];
+    tempView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    
+    
+    UILabel *tempLabel=[[UILabel alloc]initWithFrame:CGRectMake(15,0,300,22)];
+    tempLabel.backgroundColor=[UIColor clearColor];
+    
+    
+    //tempLabel.shadowColor = [UIColor blackColor];
+    //tempLabel.shadowOffset = CGSizeMake(0,2);
+    tempLabel.textColor = [UIColor redColor]; //here you can change the text color of header.
+    //tempLabel.font = [UIFont fontWithName:@"Avenir Next" size:18.0];
+    NSDictionary *attributes = @{@"NSFontFamilyAttribute": @"Avenir Next",
+                                 @"NSFontStyle": @"Light",
+                                 };
+
+    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:attributes];
+    tempLabel.font = [UIFont fontWithDescriptor:fontDescriptor size:18.0];
+    NSString *debbersString = [NSString stringWithFormat:@"%@ Fuel Entries", [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]].name];
+    tempLabel.text = debbersString; // variable named after my wife
+    tempLabel.textColor = [UIColor redColor];
+    
+    
+    //Avenir Next Regular 16.0
+    [tempView addSubview:tempLabel];
+    
+    return tempView;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -148,15 +193,24 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         RLMRealm *realm = [RLMRealm defaultRealm];
         FuelEntry *objToDelete = [myEntries objectAtIndex:indexPath.row];
         [realm beginWriteTransaction];
+        if (indexPath.row == 0) {
+            aCar.currentMileage = [[NSUserDefaults standardUserDefaults] integerForKey:@"LastKnownMileage"];
+        }
         [realm deleteObject:objToDelete];
         [realm commitWriteTransaction];
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        RLMResults *newResults = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
-        FuelEntry *newestEntry = [newResults objectAtIndex:0];
-        [realm beginWriteTransaction];
-        aCar.currentMileage = [newestEntry mileage];
-        [realm commitWriteTransaction];
+//        RLMResults *newResults = [aCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+//        if (newResults.count != 0) {
+//            [realm beginWriteTransaction];
+//            aCar.currentMileage = [[NSUserDefaults standardUserDefaults] integerForKey:@"LastKnownMileage"];
+//            [realm commitWriteTransaction];
+//        } else {
+//            [realm beginWriteTransaction];
+//            aCar.currentMileage = [[NSUserDefaults standardUserDefaults] integerForKey:@"LastKnownMileage"];
+//            [realm commitWriteTransaction];
+//        }
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }

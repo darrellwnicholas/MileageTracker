@@ -10,7 +10,7 @@
 
 
 @interface FuelTableViewController ()
-//@property NSInteger tempMileage;
+
 @end
 
 static NSString *CellIdentifier = @"fuelEntryCell";

@@ -171,6 +171,7 @@
         self.selectedCar.name = self.carNameTextField.text;
         self.selectedCar.make = self.carMakeTextField.text;
         self.selectedCar.VIN = self.carVINTextField.text;
+        self.selectedCar.year = [[NSString stringWithFormat:@"%@", self.carYearTextField.text]integerValue];
         self.selectedCar.currentMileage = [[NSString stringWithFormat:@"%@",self.carMileageTextField.text]integerValue];
         self.selectedCar.driverID = self.fuelCardPINTextField.text;
         self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];

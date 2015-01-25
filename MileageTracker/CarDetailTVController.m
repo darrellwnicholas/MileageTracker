@@ -60,6 +60,18 @@
     NSLog(@"self.activeCar.name = %@", self.currentActiveCar.name);
 
 }
+
+- (void)dealloc {
+    // unset the delegates because the textField delegate uses assign, not necessary if it uses weak reference
+    // this is how it is defined in the header: @property(nonatomic, assign) id<UITextFieldDelegate> delegate
+    _carNameTextField.delegate = nil;
+    _carMakeTextField.delegate = nil;
+    _carVINTextField.delegate = nil;
+    _carYearTextField.delegate = nil;
+    _carMileageTextField.delegate = nil;
+    _fuelCardPINTextField.delegate = nil;
+    _carOilChangeMileageTextField.delegate = nil;
+}
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
 }

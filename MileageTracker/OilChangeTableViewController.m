@@ -74,7 +74,6 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     //might not put this in..----
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.keyboardType = UIKeyboardTypeDecimalPad; //UIKeyboardTypeDefault
-        textField.leftViewMode = YES;
         textField.placeholder = @"Price (ex. 12.34)";
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {

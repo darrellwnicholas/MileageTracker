@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="adf-qt-88e">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="adf-qt-88e">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -513,8 +513,14 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MPG: 22.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ts-uJ-HXg">
+                                            <rect key="frame" x="104" y="25" width="63" height="16"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6y-4V-6RI">
-                                            <rect key="frame" x="222" y="13" width="41" height="17"/>
+                                            <rect key="frame" x="222" y="14" width="41" height="17"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="41" id="rQj-Gs-eC8"/>
                                             </constraints>
@@ -530,9 +536,12 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="D6y-4V-6RI" firstAttribute="centerY" secondItem="ZHy-Po-Mbj" secondAttribute="centerY" id="6vP-Wg-qTH"/>
-                                        <constraint firstItem="D6y-4V-6RI" firstAttribute="top" secondItem="ZHy-Po-Mbj" secondAttribute="topMargin" constant="5" id="irt-3U-pOA"/>
+                                        <constraint firstItem="D6y-4V-6RI" firstAttribute="centerY" secondItem="ZHy-Po-Mbj" secondAttribute="centerY" constant="1" id="6vP-Wg-qTH"/>
+                                        <constraint firstItem="D6y-4V-6RI" firstAttribute="leading" relation="lessThanOrEqual" secondItem="1ts-uJ-HXg" secondAttribute="trailing" constant="55" id="F9c-8O-vqc"/>
+                                        <constraint firstItem="D6y-4V-6RI" firstAttribute="top" secondItem="ZHy-Po-Mbj" secondAttribute="topMargin" constant="6" id="irt-3U-pOA"/>
+                                        <constraint firstItem="1ts-uJ-HXg" firstAttribute="leading" relation="lessThanOrEqual" secondItem="NTD-dv-N2x" secondAttribute="trailing" constant="59" id="qut-4E-LCo"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="D6y-4V-6RI" secondAttribute="trailing" constant="16" id="qzc-5q-hfe"/>
+                                        <constraint firstItem="1ts-uJ-HXg" firstAttribute="baseline" secondItem="NTD-dv-N2x" secondAttribute="baseline" id="xZI-X9-7Yo"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -562,7 +571,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fsq-lc-Lme" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1164" y="1017"/>
+            <point key="canvasLocation" x="1164" y="1015"/>
         </scene>
         <!--Car DetailTV Controller-->
         <scene sceneID="X8z-Qb-Das">

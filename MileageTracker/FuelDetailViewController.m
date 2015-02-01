@@ -9,7 +9,7 @@
 #import "FuelDetailViewController.h"
 
 @interface FuelDetailViewController ()
-
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation FuelDetailViewController
@@ -105,4 +105,6 @@ static NSString * const reuseIdentifier = @"Cell";
 //}
 //*/
 
+- (IBAction)toggleFuelEntryFillUp:(UISwitch *)sender {
+}
 @end

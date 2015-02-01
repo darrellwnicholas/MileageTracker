@@ -10,22 +10,19 @@
 
 @interface FuelDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation FuelDetailViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+//static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
-    //[self.tableView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // Do any additional setup after loading the view.
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:singleTap];
     _mileageLabel.text = [@(self.selectedEntry.mileage) stringValue];
     _driverIDLabel.text = self.activeCar.driverID;
    
@@ -35,7 +32,51 @@ static NSString * const reuseIdentifier = @"Cell";
     formatter.doesRelativeDateFormatting = YES;
     
     _dateLabel.text = [formatter stringFromDate:self.selectedEntry.date];
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // make sure scrollview doesn't automatically resize to accomodate for nav bar (at least I think that's what it's doing). It was leaving blank space at the top of the screen about the size of the nav bar.
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _pricePerGallonTextField.delegate = nil;
+    _numberGallonsPumpedTextField.delegate = nil;
+}
+
+// Called when the UIKeyboardDidShowNotification is sent...
+- (void)keyboardWasShown:(NSNotification *)aNotification
+{
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [self.scrollView setContentOffset:CGPointMake(0, kbSize.height) animated:YES];
+}
+
+// Called when the text field is being edited
+// setting textField delegate to self
+- (IBAction)textFieldDidBeginEditing:(UITextField *)sender {
+    sender.delegate = self;
+    self.currentResponder = sender;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent.
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification
+{
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+-(BOOL) textFieldShouldReturn: (UITextField *) textField {
+    return [textField resignFirstResponder];
+    
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
 }
 
 //- (void)didReceiveMemoryWarning {

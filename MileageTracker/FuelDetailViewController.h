@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface FuelDetailViewController : UIViewController
+@interface FuelDetailViewController : UIViewController <UITextFieldDelegate>
 @property (strong, nonatomic) Car *activeCar;
 @property FuelEntry *selectedEntry;
 

@@ -25,13 +25,33 @@
     [self.view addGestureRecognizer:singleTap];
     _mileageLabel.text = [@(self.selectedEntry.mileage) stringValue];
     _driverIDLabel.text = self.activeCar.driverID;
-   
+
+    self.pricePerGallonTextField.text = [NSString stringWithFormat:@"%.3f", self.selectedEntry.price];
+    self.numberGallonsPumpedTextField.text = [NSString stringWithFormat:@"%.3f", self.selectedEntry.gallons];
+    if (self.selectedEntry.fillUp == YES) {
+        [self.isFillUpSwitch setOn:YES];
+        self.yesNoLabel.text = @"-Yes";
+    } else {
+        [self.isFillUpSwitch setOn:NO];
+        self.yesNoLabel.text = @"-No";
+    }
+    
+//    self.selectedEntry.price = self.pricePerGallonTextField.text.doubleValue;
+//    self.selectedEntry.gallons = self.numberGallonsPumpedTextField.text.doubleValue;
+//   
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeStyle = NSDateFormatterMediumStyle;
     formatter.dateStyle = NSDateFormatterMediumStyle;
     formatter.doesRelativeDateFormatting = YES;
     
     _dateLabel.text = [formatter stringFromDate:self.selectedEntry.date];
+    
+    // creating date picker for "keyboard" of dateLabel
+    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
+    [datePicker setDate:[NSDate date]];
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    [datePicker addTarget:self action:@selector(dateTextField:) forControlEvents:UIControlEventValueChanged];
+    [_dateLabel setInputView:datePicker];
     
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -49,12 +69,31 @@
     _numberGallonsPumpedTextField.delegate = nil;
 }
 
+- (void)dateTextField:(id)sender
+{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    UIDatePicker *picker = (UIDatePicker*)_dateLabel.inputView;
+    [picker setMaximumDate:[NSDate date]];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    NSDate *entryDate = picker.date;
+    [dateFormat setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormat setTimeStyle:NSDateFormatterMediumStyle];
+    [dateFormat setDoesRelativeDateFormatting:YES];
+     
+    
+    NSString *dateString = [dateFormat stringFromDate:entryDate];
+    _dateLabel.text = [NSString stringWithFormat:@"%@", dateString];
+    self.selectedEntry.date = entryDate;
+    [realm commitWriteTransaction];
+}
+
 // Called when the UIKeyboardDidShowNotification is sent...
 - (void)keyboardWasShown:(NSNotification *)aNotification
 {
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    [self.scrollView setContentOffset:CGPointMake(0, kbSize.height) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, kbSize.height * .7) animated:YES];
 }
 
 // Called when the text field is being edited
@@ -71,81 +110,50 @@
 }
 
 -(BOOL) textFieldShouldReturn: (UITextField *) textField {
-    return [textField resignFirstResponder];
-    
+    if (textField.tag <= 12) {
+        return [textField resignFirstResponder];
+    } else {
+        return [textField resignFirstResponder];
+    }
 }
 
 - (void)resignOnTap:(id)iSender {
     [self.currentResponder resignFirstResponder];
 }
 
-//- (void)didReceiveMemoryWarning {
-//    [super didReceiveMemoryWarning];
-//    // Dispose of any resources that can be recreated.
-//}
-//
-///*
-//#pragma mark - Navigation
-//
-//// In a storyboard-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    // Get the new view controller using [segue destinationViewController].
-//    // Pass the selected object to the new view controller.
-//}
-//*/
-//
-//#pragma mark <UICollectionViewDataSource>
-//
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//#warning Incomplete method implementation -- Return the number of sections
-//    return 0;
-//}
-//
-//
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//#warning Incomplete method implementation -- Return the number of items in the section
-//    return 0;
-//}
-//
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-//    
-//    // Configure the cell
-//    
-//    return cell;
-//}
-//
-//#pragma mark <UICollectionViewDelegate>
-//
-///*
-//// Uncomment this method to specify if the specified item should be highlighted during tracking
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-//	return YES;
-//}
-//*/
-//
-///*
-//// Uncomment this method to specify if the specified item should be selected
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return YES;
-//}
-//*/
-//
-///*
-//// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-//	return NO;
-//}
-//
-//- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-//	return NO;
-//}
-//
-//- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-//	
-//}
-//*/
 
 - (IBAction)toggleFuelEntryFillUp:(UISwitch *)sender {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    if ([sender isOn]) {
+        self.selectedEntry.fillUp = YES;
+        self.yesNoLabel.text = @"-Yes";
+    } else {
+        self.selectedEntry.fillUp = NO;
+        self.yesNoLabel.text = @"-No";
+    }
+    [realm commitWriteTransaction];
+}
+
+- (IBAction)save:(id)sender {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Save" message:@"Save all changes?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        self.selectedEntry.price = self.pricePerGallonTextField.text.doubleValue;
+        self.selectedEntry.gallons = self.numberGallonsPumpedTextField.text.doubleValue;
+        
+        [realm commitWriteTransaction];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
+
 }
 @end

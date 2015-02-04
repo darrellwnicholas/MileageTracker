@@ -59,8 +59,10 @@
                                                  name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     
-    // make sure scrollview doesn't automatically resize to accomodate for nav bar (at least I think that's what it's doing). It was leaving blank space at the top of the screen about the size of the nav bar.
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    making sure scrollview adjusts to accomodate navigation bar. Before I had not set scrollview all the way to the top of the view, I had
+//    only set it to the bottom of the navigation bar in the storyboard. In that instance I had to set this value to NO. Now that I have
+//    corrected my scrollview size, I am back to setting this value to YES (which I believe is the default, so this may be unnecessary).
+    self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
 - (void)dealloc {
@@ -93,7 +95,7 @@
 {
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    [self.scrollView setContentOffset:CGPointMake(0, kbSize.height * .7) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, kbSize.height / 2) animated:YES];
 }
 
 // Called when the text field is being edited

@@ -52,7 +52,13 @@
     _fuelCardPINTextField.text = _selectedCar.driverID;
     NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", (long)_selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
-    PhotoObject *obj = [self.selectedCar.carPhoto firstObject];
+    
+    
+//     NSData *pngData = [NSData dataWithContentsOfFile:self.selectedCar.carPhoto.lastObject];
+//     UIImage *image = [UIImage imageWithData:pngData];
+    
+    
+    PhotoObject *obj = [self.selectedCar.carPhoto lastObject];
     
     _carPhotoImageView.image = [UIImage imageNamed:obj.imageName];
     
@@ -102,6 +108,39 @@
 }
 
 - (IBAction)takeOrChoosePhoto:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Vehicle Photo" message:@"Take photo or choose existing..." preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [self presentViewController:picker animated:YES completion:nil];
+        } else {
+            UIAlertView *notAvailableAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"Your device has no camera, or it is not available at this time" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [notAvailableAlert show];
+        }
+
+    }];
+    UIAlertAction *chooseAction = [UIAlertAction actionWithTitle:@"Choose Existing" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            [self presentViewController:picker animated:YES completion:nil];
+        } else {
+            UIAlertView *notAvailableAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"You have no photos or your library isn't available at this time" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [notAvailableAlert show];
+        }
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:cameraAction];
+    [alert addAction:chooseAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (IBAction)saveChanges:(id)sender {
@@ -129,5 +168,67 @@
         
     }];
 }
-     
+
+#pragma mark - UIImagePickerController Delegate Methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    // turn the image into png data
+    NSData *pngData = UIImagePNGRepresentation(chosenImage);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *uuidImageName = [NSString stringWithFormat:@"%@-image.png",[self.selectedCar uuid]];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:uuidImageName]; //Add the file name
+    NSLog(@"%@", filePath);
+    [pngData writeToFile:filePath atomically:YES]; //Write the file
+    RLMRealm * realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    PhotoObject *obj = [[PhotoObject alloc] init];
+    obj.imageName = filePath;
+    [self.selectedCar.carPhoto addObject:obj];
+    [realm commitWriteTransaction];
+    
+    //self.carPhotoImageView.image = chosenImage;
+    //NSLog(@"%@", info.description);
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView reloadData];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+/*
+ Make an alert view with if else for choosing take a photo or pick a photo. Either way, save the image to the documents
+ directory of the app
+ 
+ probably need to check if camera is available too
+ 
+ --From scratchpad app--
+ 
+ - (IBAction)takePhoto:(UIButton *)sender {
+ 
+ UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+ picker.delegate = self;
+ picker.allowsEditing = YES;
+ picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+ 
+ [self presentViewController:picker animated:YES completion:NULL];
+ }
+ 
+ - (IBAction)selectPhoto:(UIButton *)sender {
+ 
+ UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+ picker.delegate = self;
+ picker.allowsEditing = YES;
+ picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+ 
+ [self presentViewController:picker animated:YES completion:NULL];
+ }
+
+ */
+
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface CarDetailTVController : UITableViewController <UITextFieldDelegate>
+@interface CarDetailTVController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property Car *selectedCar;
 @property Car *currentActiveCar;
 

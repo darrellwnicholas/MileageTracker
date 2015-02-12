@@ -52,7 +52,13 @@
     _fuelCardPINTextField.text = _selectedCar.driverID;
     NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", (long)_selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
-    PhotoObject *obj = [self.selectedCar.carPhoto firstObject];
+    
+    
+//     NSData *pngData = [NSData dataWithContentsOfFile:self.selectedCar.carPhoto.lastObject];
+//     UIImage *image = [UIImage imageWithData:pngData];
+    
+    
+    PhotoObject *obj = [self.selectedCar.carPhoto lastObject];
     
     _carPhotoImageView.image = [UIImage imageNamed:obj.imageName];
     
@@ -94,75 +100,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Potentially incomplete method implementation.
-//    // Return the number of sections.
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete method implementation.
-//    // Return the number of rows in the section.
-//    return 0;
-//}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 - (IBAction)makeVehicleActive:(id)sender {
     [[NSUserDefaults standardUserDefaults] setValue:self.selectedCar.uuid forKey:@"activeCar"];
     [[NSUserDefaults standardUserDefaults] setInteger:self.selectedCar.currentMileage forKey:@"LastKnownMileage"];
@@ -171,6 +108,39 @@
 }
 
 - (IBAction)takeOrChoosePhoto:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Vehicle Photo" message:@"Take photo or choose existing..." preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [self presentViewController:picker animated:YES completion:nil];
+        } else {
+            UIAlertView *notAvailableAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"Your device has no camera, or it is not available at this time" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [notAvailableAlert show];
+        }
+
+    }];
+    UIAlertAction *chooseAction = [UIAlertAction actionWithTitle:@"Choose Existing" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            [self presentViewController:picker animated:YES completion:nil];
+        } else {
+            UIAlertView *notAvailableAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"You have no photos or your library isn't available at this time" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [notAvailableAlert show];
+        }
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:cameraAction];
+    [alert addAction:chooseAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (IBAction)saveChanges:(id)sender {
@@ -198,5 +168,67 @@
         
     }];
 }
-     
+
+#pragma mark - UIImagePickerController Delegate Methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    // turn the image into png data
+    NSData *pngData = UIImagePNGRepresentation(chosenImage);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *uuidImageName = [NSString stringWithFormat:@"%@-image.png",[self.selectedCar uuid]];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:uuidImageName]; //Add the file name
+    NSLog(@"%@", filePath);
+    [pngData writeToFile:filePath atomically:YES]; //Write the file
+    RLMRealm * realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    PhotoObject *obj = [[PhotoObject alloc] init];
+    obj.imageName = filePath;
+    [self.selectedCar.carPhoto addObject:obj];
+    [realm commitWriteTransaction];
+    
+    //self.carPhotoImageView.image = chosenImage;
+    //NSLog(@"%@", info.description);
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView reloadData];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+/*
+ Make an alert view with if else for choosing take a photo or pick a photo. Either way, save the image to the documents
+ directory of the app
+ 
+ probably need to check if camera is available too
+ 
+ --From scratchpad app--
+ 
+ - (IBAction)takePhoto:(UIButton *)sender {
+ 
+ UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+ picker.delegate = self;
+ picker.allowsEditing = YES;
+ picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+ 
+ [self presentViewController:picker animated:YES completion:NULL];
+ }
+ 
+ - (IBAction)selectPhoto:(UIButton *)sender {
+ 
+ UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+ picker.delegate = self;
+ picker.allowsEditing = YES;
+ picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+ 
+ [self presentViewController:picker animated:YES completion:NULL];
+ }
+
+ */
+
 @end

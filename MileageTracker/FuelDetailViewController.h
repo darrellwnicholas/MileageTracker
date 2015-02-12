@@ -9,12 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface FuelDetailViewController : UIViewController
+@interface FuelDetailViewController : UIViewController <UITextFieldDelegate>
 @property (strong, nonatomic) Car *activeCar;
 @property FuelEntry *selectedEntry;
 
 @property (weak, nonatomic) IBOutlet UILabel *mileageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driverIDLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UITextField *dateLabel;
+@property (weak, nonatomic) IBOutlet UITextField *pricePerGallonTextField;
+@property (weak, nonatomic) IBOutlet UITextField *numberGallonsPumpedTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *isFillUpSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *yesNoLabel;
+
+- (IBAction)toggleFuelEntryFillUp:(UISwitch *)sender;
+- (IBAction)save:(id)sender;
 
 @end

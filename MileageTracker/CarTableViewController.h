@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Car.h"
 
-@interface CarTableViewController : UITableViewController
+@interface CarTableViewController : UITableViewController 
 
 @property (strong, nonatomic) Car *activeCar;
 

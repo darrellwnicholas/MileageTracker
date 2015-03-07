@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-MileageTracker-PNChart.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MileageTracker-Realm.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MileageTracker-UICountingLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3C1CA6BCEA62E8F66127BC25</key>
+		<key>1D1690CB474537E65A6FF05A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A3A5CFEC6DF0F52557E44480</key>
+		<key>3E311EDC3F05EB41BAAC0D1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>86203450B564969C66763DFF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CF034E4375EE58DF5673FB4B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

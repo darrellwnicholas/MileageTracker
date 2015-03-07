@@ -3,6 +3,7 @@
 
 target 'MileageTracker' do
 pod "Realm"
+pod 'PNChart', '~> 0.8'
 end
 
 target 'MileageTrackerTests' do

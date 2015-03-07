@@ -8,7 +8,7 @@
 
 #import "CarTableViewController.h"
 #import "CarDetailTVController.h"
-
+#import "PNChart.h"
 #import "Car.h"
 
 @interface CarTableViewController ()
@@ -194,36 +194,93 @@ static NSString *CellIdentifier = @"customCarCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UILabel *activeCarLabel = (UILabel*)[cell.contentView viewWithTag:4];
+    UILabel *mpgLabel = (UILabel*)[cell.contentView viewWithTag:5];
+    UIView *oilLifeView = (UIView*)[cell.contentView viewWithTag:40];
+    UILabel *carNameLabel = (UILabel*)[cell.contentView viewWithTag:20];
+    UILabel *odometerLabel = (UILabel*)[cell.contentView viewWithTag:30];
+    UIImageView *carImageView = (UIImageView*)[cell.contentView viewWithTag:10];
+    UIVisualEffectView *blurView = (UIVisualEffectView*)[cell.contentView viewWithTag:99];
+    [cell.contentView addSubview:carImageView];
+    [cell.contentView addSubview:blurView];
+    
+    // For Circle Chart of Oil Life
+    
+    
+    /*
+    PNCircleChart * circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 80.0, SCREEN_WIDTH, 100.0) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:60] clockwise:NO shadow:NO];
+    circleChart.backgroundColor = [UIColor clearColor];
+    [circleChart setStrokeColor:PNGreen];
+    [circleChart strokeChart];
+     */
 //    UILabel *carTextLabel = (UILabel*)[cell.contentView viewWithTag:2];
 //    UILabel *carDetailTextLabel = (UILabel*)[cell.contentView viewWithTag:3];
 //    UIImageView *thumbnailImageView = (UIImageView*)[cell.contentView viewWithTag:1];
 //    [cell addSubview:activeCarLabel];
-//    [cell addSubview:carTextLabel];
-//    [cell addSubview:carDetailTextLabel];
+//    [cell addSubview:mpgLabel];
+//    [cell addSubview:odometerLabel];
+//    [cell addSubview:carNameLabel];
     //cell.imageView.image = thumbnailImageView.image;
     RLMResults *myCars = [Car allObjects];
     self.cars = myCars;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         activeCarLabel.hidden = YES;
-        Car *car = [self.cars objectAtIndex:indexPath.row];
+        Car *car = [self.cars objectAtIndex:indexPath.row]; // get the car for this row
+        PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
+        carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
+        // oil life chart
+        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:75] clockwise:YES]; // TODO: Change current to calculation on oil life
+        oilLifeChart.backgroundColor = [UIColor clearColor];
+        [oilLifeChart setStrokeColor:PNGreen];
+        [oilLifeChart strokeChart];
+        [oilLifeChart setChartType:PNChartFormatTypePercent];
+        oilLifeChart.center = CGPointMake(oilLifeView.bounds.size.width/2, oilLifeView.bounds.size.height/2);
+        oilLifeView.backgroundColor = [UIColor clearColor];
+        [oilLifeView addSubview:oilLifeChart];
         
-        NSString *miles = [NSString stringWithFormat:@"Current Miles: %@", @(car.currentMileage)];
+        // Car Name Label
+        carNameLabel.text = car.name;
         
-        cell.textLabel.text = car.name;
-        cell.detailTextLabel.text = miles;
+        // Get the current mileage, and set the odometer label
+        NSString *miles = [NSString stringWithFormat:@"%@", @(car.currentMileage)];
+        odometerLabel.text = miles;
+        
+        // TODO: add a property to the Car class for "mpg"
+        // For the time being, we will set this at a constant value, just for testing
+        mpgLabel.text = @"mpg: 22.52";
+        
+        // if this is the active car, make the label visible
         if ([car.uuid isEqualToString:[self activeCarID]]) {
             activeCarLabel.hidden = NO;
         }
 
     } else {
         activeCarLabel.hidden = YES;
-        Car *car = [self.cars objectAtIndex:indexPath.row];
-        //PhotoObject *img = [car.carPhoto firstObject];
-        NSString *miles = [NSString stringWithFormat:@"Current Miles: %@", @(car.currentMileage)];
-        //cell.thumbnailImageView.image = [UIImage imageNamed:img.imageName]; //carPhoto.firstObject is a string, that represents a path to an image, which is then loaded from the sandbox, not the database and hopefully displayed on the screen.
-        cell.textLabel.text = car.name;
-        cell.detailTextLabel.text = miles;
+        Car *car = [self.cars objectAtIndex:indexPath.row]; // get the car for this row
+        PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
+        carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
+        // oil life chart
+        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:75] clockwise:YES]; // TODO: Change current to calculation on oil life
+        oilLifeChart.backgroundColor = [UIColor clearColor];
+        [oilLifeChart setStrokeColor:PNGreen];
+        [oilLifeChart strokeChart];
+        [oilLifeChart setChartType:PNChartFormatTypePercent];
+        oilLifeChart.center = CGPointMake(oilLifeView.bounds.size.width/2, oilLifeView.bounds.size.height/2);
+        oilLifeView.backgroundColor = [UIColor clearColor];
+        [oilLifeView addSubview:oilLifeChart];
+        
+        // Car Name Label
+        carNameLabel.text = car.name;
+        
+        // Get the current mileage, and set the odometer label
+        NSString *miles = [NSString stringWithFormat:@"%@", @(car.currentMileage)];
+        odometerLabel.text = miles;
+        
+        // TODO: add a property to the Car class for "mpg"
+        // For the time being, we will set this at a constant value, just for testing
+        mpgLabel.text = @"mpg: 22.52";
+        
+        // if this is the active car, make the label visible
         if ([car.uuid isEqualToString:[self activeCarID]]) {
             activeCarLabel.hidden = NO;
         }

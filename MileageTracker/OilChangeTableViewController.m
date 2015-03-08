@@ -32,6 +32,12 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     imageView.alpha = 0.2;
     [self.tableView setBackgroundView:imageView];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //    self.title = self.activeCar.name;
+    //    [self.tableView setNeedsDisplay];
+    [self.tableView reloadData];
+}
 
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];

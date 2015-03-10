@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *fuelCardPINTextField;
 @property (weak, nonatomic) IBOutlet UITextField *carOilChangeMileageTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *carPhotoImageView;
+@property (weak, nonatomic) IBOutlet UITextField *nextOilChangeTextField;
 
 
 - (IBAction)makeVehicleActive:(id)sender;

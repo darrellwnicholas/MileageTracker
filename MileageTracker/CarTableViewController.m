@@ -55,6 +55,7 @@ static NSString *CellIdentifier = @"customCarCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    [self.view setNeedsDisplay];
 
     
 }
@@ -157,12 +158,14 @@ static NSString *CellIdentifier = @"customCarCell";
      [realm addObject:car];
      [realm commitWriteTransaction];
      */
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Create New Vehicle" message:@"Enter Vehicle Name" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Create New Vehicle" message:@"Enter Vehicle Name & Odometer" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         RLMRealm *realm = [RLMRealm defaultRealm];
         Car *car = [[Car alloc] init];
         UITextField *textField = alert.textFields[0];
+        UITextField *odometerField = alert.textFields[1];
         car.name = textField.text;
+        car.currentMileage = [[NSString stringWithFormat:@"%@",odometerField.text]integerValue];
         NSString *nameOfCar = @"theStandardCarPhoto.png";
         PhotoObject *defaultCarPhoto = [[PhotoObject alloc] init];
         defaultCarPhoto.imageName = nameOfCar;
@@ -178,7 +181,12 @@ static NSString *CellIdentifier = @"customCarCell";
 
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.keyboardType = UIKeyboardTypeDefault;
+        textField.placeholder = @"Enter a vehicle name";
         textField.autocapitalizationType = YES;
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.placeholder = @"Enter current odomoter";
     }];
     [alert addAction:saveAction];
     [alert addAction:cancelAction];
@@ -187,6 +195,33 @@ static NSString *CellIdentifier = @"customCarCell";
 
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
+}
+
+
+
+- (NSUInteger)getCurrentOilLifeForCar:(Car *)car {
+    if (car.currentMileage >= car.nextOilChange) {
+        return 0;
+    } else {
+        float cMiles = car.currentMileage;
+        float nOilChange = car.nextOilChange;
+        float difference = nOilChange - cMiles;
+        float mpchange = car.oilChangeMiles;
+        float percent = (difference / mpchange) * 100;
+        NSUInteger theNumber = [[NSNumber numberWithFloat:percent] integerValue];
+        return theNumber;
+          
+    }
+    /*  at this point you have how many miles are left before your next oil change. 1000 miles between changes. you have drove 300. You would have 700.
+        at this point you can return milesleftOnOilChange / milesBetweenChanges * 100. You multiply by 100 because you would get 700 / 1000 = .7 so multiply by 100 and return that as
+        an NSNumber with the value of 70 which would represent 70% oil life left.
+     */
+//    
+//    NSNumber *milesLeftUntilOilChange;
+//    [NSDecimalSubtract((__bridge NSDecimal *)(milesLeftUntilOilChange), car.nextOilChange, car.currentMileage, NSRoundPlain)];
+//    NSNumber *percentOilLife = milesLeftUntilOilChange / milesBetweenChanges;
+//    
+//    return percentOilLife;
 }
 
 
@@ -211,6 +246,14 @@ static NSString *CellIdentifier = @"customCarCell";
     circleChart.backgroundColor = [UIColor clearColor];
     [circleChart setStrokeColor:PNGreen];
     [circleChart strokeChart];
+     
+     - (id)initWithFrame:(CGRect)frame
+     total:(NSNumber *)total
+     current:(NSNumber *)current
+     clockwise:(BOOL)clockwise
+     shadow:(BOOL)hasBackgroundShadow
+     shadowColor:(UIColor *)backgroundShadowColor
+     displayCountingLabel:(BOOL)displayCountingLabel;
      */
 //    UILabel *carTextLabel = (UILabel*)[cell.contentView viewWithTag:2];
 //    UILabel *carDetailTextLabel = (UILabel*)[cell.contentView viewWithTag:3];
@@ -229,7 +272,7 @@ static NSString *CellIdentifier = @"customCarCell";
         PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
         carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
         // oil life chart
-        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:75] clockwise:YES]; // TODO: Change current to calculation on oil life
+        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt: [self getCurrentOilLifeForCar:car]] clockwise:YES shadow:NO shadowColor:nil displayCountingLabel:YES]; // TODO: Change current to calculation on oil life
         oilLifeChart.backgroundColor = [UIColor clearColor];
         [oilLifeChart setStrokeColor:PNGreen];
         [oilLifeChart strokeChart];
@@ -260,7 +303,7 @@ static NSString *CellIdentifier = @"customCarCell";
         PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
         carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
         // oil life chart
-        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:75] clockwise:YES]; // TODO: Change current to calculation on oil life
+        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt: [self getCurrentOilLifeForCar:car]] clockwise:YES shadow:NO shadowColor:nil displayCountingLabel:YES];// TODO: Change current to calculation on oil life
         oilLifeChart.backgroundColor = [UIColor clearColor];
         [oilLifeChart setStrokeColor:PNGreen];
         [oilLifeChart strokeChart];

@@ -216,12 +216,9 @@
 				54D71CD51A606A160017E3C1 /* CarTableViewController.h */,
 				54D71CD61A606A160017E3C1 /* CarTableViewController.m */,
 				54CE01E71A655E840082FEA9 /* Custom TableView Cells */,
-				54019F171A63152300D2D045 /* CarDetailTVController.h */,
-				54019F181A63152300D2D045 /* CarDetailTVController.m */,
+				54E7CF141AACC4C0004218E9 /* Detail Views */,
 				54D71CD81A606A320017E3C1 /* FuelTableViewController.h */,
 				54D71CD91A606A320017E3C1 /* FuelTableViewController.m */,
-				544E10C31A66452C0056C093 /* FuelDetailViewController.h */,
-				544E10C41A66452C0056C093 /* FuelDetailViewController.m */,
 				54D71CDB1A606A4A0017E3C1 /* OilChangeTableViewController.h */,
 				54D71CDC1A606A4A0017E3C1 /* OilChangeTableViewController.m */,
 				54D71CDE1A606A610017E3C1 /* ServiceTableViewController.h */,
@@ -230,6 +227,17 @@
 				54D71CE21A606A860017E3C1 /* MonthlyTableViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		54E7CF141AACC4C0004218E9 /* Detail Views */ = {
+			isa = PBXGroup;
+			children = (
+				54019F171A63152300D2D045 /* CarDetailTVController.h */,
+				54019F181A63152300D2D045 /* CarDetailTVController.m */,
+				544E10C31A66452C0056C093 /* FuelDetailViewController.h */,
+				544E10C41A66452C0056C093 /* FuelDetailViewController.m */,
+			);
+			name = "Detail Views";
 			sourceTree = "<group>";
 		};
 		8ECEE420B937936AB9E2CC02 /* Pods */ = {

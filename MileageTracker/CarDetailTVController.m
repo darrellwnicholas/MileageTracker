@@ -35,6 +35,7 @@
     _carMileageTextField.delegate = self;
     _fuelCardPINTextField.delegate = self;
     _carOilChangeMileageTextField.delegate = self;
+    _nextOilChangeTextField.delegate = self;
     
     // Textfield value assignments
     _carNameTextField.text  = _selectedCar.name;
@@ -52,6 +53,8 @@
     _fuelCardPINTextField.text = _selectedCar.driverID;
     NSString *oilChangeMiles = [NSString stringWithFormat:@"%li", (long)_selectedCar.oilChangeMiles];
     _carOilChangeMileageTextField.text = oilChangeMiles;
+    NSString *nextOilChangeMileage = [NSString stringWithFormat:@"%li", (long)_selectedCar.nextOilChange];
+    _nextOilChangeTextField.text = nextOilChangeMileage;
     
     
 //     NSData *pngData = [NSData dataWithContentsOfFile:self.selectedCar.carPhoto.lastObject];
@@ -77,6 +80,7 @@
     _carMileageTextField.delegate = nil;
     _fuelCardPINTextField.delegate = nil;
     _carOilChangeMileageTextField.delegate = nil;
+    _nextOilChangeTextField.delegate = nil;
 }
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
@@ -157,6 +161,7 @@
         self.selectedCar.currentMileage = [[NSString stringWithFormat:@"%@",self.carMileageTextField.text]integerValue];
         self.selectedCar.driverID = self.fuelCardPINTextField.text;
         self.selectedCar.oilChangeMiles = [[NSString stringWithFormat:@"%@", self.carOilChangeMileageTextField.text] integerValue];
+        self.selectedCar.nextOilChange = [[NSString stringWithFormat:@"%@", self.nextOilChangeTextField.text] integerValue];
         [realm commitWriteTransaction];
         [self.navigationController popViewControllerAnimated:YES];
     }];

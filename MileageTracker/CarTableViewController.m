@@ -42,14 +42,10 @@ static NSString *CellIdentifier = @"customCarCell";
     [self.tableView setBackgroundView:imageView];
     
     RLMResults *myCars = [Car allObjects];
-    
 
-    
-    
-    
     _cars = myCars;
     
-    
+    [self.view setNeedsDisplay];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -234,9 +230,9 @@ static NSString *CellIdentifier = @"customCarCell";
     UILabel *carNameLabel = (UILabel*)[cell.contentView viewWithTag:20];
     UILabel *odometerLabel = (UILabel*)[cell.contentView viewWithTag:30];
     UIImageView *carImageView = (UIImageView*)[cell.contentView viewWithTag:10];
-    UIVisualEffectView *blurView = (UIVisualEffectView*)[cell.contentView viewWithTag:99];
+    
     [cell.contentView addSubview:carImageView];
-    [cell.contentView addSubview:blurView];
+    
     
     // For Circle Chart of Oil Life
     

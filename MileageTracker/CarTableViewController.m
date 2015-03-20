@@ -8,7 +8,6 @@
 
 #import "CarTableViewController.h"
 #import "CarDetailTVController.h"
-#import "PNChart.h"
 #import "Car.h"
 
 @interface CarTableViewController ()
@@ -195,7 +194,7 @@ static NSString *CellIdentifier = @"customCarCell";
 
 
 
-- (NSUInteger)getCurrentOilLifeForCar:(Car *)car {
+- (NSUInteger)calculateCurrentOilLifeForCar:(Car *)car {
     if (car.currentMileage >= car.nextOilChange) {
         return 0;
     } else {
@@ -204,15 +203,15 @@ static NSString *CellIdentifier = @"customCarCell";
         float difference = nOilChange - cMiles;
         float mpchange = car.oilChangeMiles;
         float percent = (difference / mpchange) * 100;
-        NSUInteger theNumber = [[NSNumber numberWithFloat:percent] integerValue];
-        return theNumber;
+        NSUInteger result = (NSUInteger)percent;
+        return result;
           
     }
     /*  at this point you have how many miles are left before your next oil change. 1000 miles between changes. you have drove 300. You would have 700.
         at this point you can return milesleftOnOilChange / milesBetweenChanges * 100. You multiply by 100 because you would get 700 / 1000 = .7 so multiply by 100 and return that as
         an NSNumber with the value of 70 which would represent 70% oil life left.
      */
-//    
+    
 //    NSNumber *milesLeftUntilOilChange;
 //    [NSDecimalSubtract((__bridge NSDecimal *)(milesLeftUntilOilChange), car.nextOilChange, car.currentMileage, NSRoundPlain)];
 //    NSNumber *percentOilLife = milesLeftUntilOilChange / milesBetweenChanges;
@@ -226,39 +225,15 @@ static NSString *CellIdentifier = @"customCarCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UILabel *activeCarLabel = (UILabel*)[cell.contentView viewWithTag:4];
     UILabel *mpgLabel = (UILabel*)[cell.contentView viewWithTag:5];
-    UIView *oilLifeView = (UIView*)[cell.contentView viewWithTag:40];
+    UILabel *oilLifeLabel = (UILabel*)[cell.contentView viewWithTag:40];
     UILabel *carNameLabel = (UILabel*)[cell.contentView viewWithTag:20];
     UILabel *odometerLabel = (UILabel*)[cell.contentView viewWithTag:30];
     UIImageView *carImageView = (UIImageView*)[cell.contentView viewWithTag:10];
     
     [cell.contentView addSubview:carImageView];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
     
-    
-    // For Circle Chart of Oil Life
-    
-    
-    /*
-    PNCircleChart * circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 80.0, SCREEN_WIDTH, 100.0) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt:60] clockwise:NO shadow:NO];
-    circleChart.backgroundColor = [UIColor clearColor];
-    [circleChart setStrokeColor:PNGreen];
-    [circleChart strokeChart];
-     
-     - (id)initWithFrame:(CGRect)frame
-     total:(NSNumber *)total
-     current:(NSNumber *)current
-     clockwise:(BOOL)clockwise
-     shadow:(BOOL)hasBackgroundShadow
-     shadowColor:(UIColor *)backgroundShadowColor
-     displayCountingLabel:(BOOL)displayCountingLabel;
-     */
-//    UILabel *carTextLabel = (UILabel*)[cell.contentView viewWithTag:2];
-//    UILabel *carDetailTextLabel = (UILabel*)[cell.contentView viewWithTag:3];
-//    UIImageView *thumbnailImageView = (UIImageView*)[cell.contentView viewWithTag:1];
-//    [cell addSubview:activeCarLabel];
-//    [cell addSubview:mpgLabel];
-//    [cell addSubview:odometerLabel];
-//    [cell addSubview:carNameLabel];
-    //cell.imageView.image = thumbnailImageView.image;
     RLMResults *myCars = [Car allObjects];
     self.cars = myCars;
     if (cell == nil) {
@@ -266,16 +241,11 @@ static NSString *CellIdentifier = @"customCarCell";
         activeCarLabel.hidden = YES;
         Car *car = [self.cars objectAtIndex:indexPath.row]; // get the car for this row
         PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
-        carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
-        // oil life chart
-        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt: [self getCurrentOilLifeForCar:car]] clockwise:YES shadow:NO shadowColor:nil displayCountingLabel:YES]; // TODO: Change current to calculation on oil life
-        oilLifeChart.backgroundColor = [UIColor clearColor];
-        [oilLifeChart setStrokeColor:PNGreen];
-        [oilLifeChart strokeChart];
-        [oilLifeChart setChartType:PNChartFormatTypePercent];
-        oilLifeChart.center = CGPointMake(oilLifeView.bounds.size.width/2, oilLifeView.bounds.size.height/2);
-        oilLifeView.backgroundColor = [UIColor clearColor];
-        [oilLifeView addSubview:oilLifeChart];
+        NSString *photoName = [documentsDirectory stringByAppendingString:img.imageName];
+        carImageView.image = [UIImage imageWithContentsOfFile:photoName];
+        
+        // oil life label
+        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
         carNameLabel.text = car.name;
@@ -297,16 +267,11 @@ static NSString *CellIdentifier = @"customCarCell";
         activeCarLabel.hidden = YES;
         Car *car = [self.cars objectAtIndex:indexPath.row]; // get the car for this row
         PhotoObject *img = [car.carPhoto lastObject];      // get the image for the car
-        carImageView.image = [UIImage imageWithContentsOfFile:img.imageName];
-        // oil life chart
-        PNCircleChart *oilLifeChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0, 0, oilLifeView.bounds.size.height, oilLifeView.bounds.size.height - 4) total:[NSNumber numberWithInt:100] current:[NSNumber numberWithInt: [self getCurrentOilLifeForCar:car]] clockwise:YES shadow:NO shadowColor:nil displayCountingLabel:YES];// TODO: Change current to calculation on oil life
-        oilLifeChart.backgroundColor = [UIColor clearColor];
-        [oilLifeChart setStrokeColor:PNGreen];
-        [oilLifeChart strokeChart];
-        [oilLifeChart setChartType:PNChartFormatTypePercent];
-        oilLifeChart.center = CGPointMake(oilLifeView.bounds.size.width/2, oilLifeView.bounds.size.height/2);
-        oilLifeView.backgroundColor = [UIColor clearColor];
-        [oilLifeView addSubview:oilLifeChart];
+        NSString *photoName = [documentsDirectory stringByAppendingString:img.imageName];
+        carImageView.image = [UIImage imageWithContentsOfFile:photoName];
+        
+        // oil life label
+        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
         carNameLabel.text = car.name;
@@ -323,7 +288,6 @@ static NSString *CellIdentifier = @"customCarCell";
         if ([car.uuid isEqualToString:[self activeCarID]]) {
             activeCarLabel.hidden = NO;
         }
-        
     }
     
     
@@ -431,6 +395,142 @@ static NSString *CellIdentifier = @"customCarCell";
     }
     
 }
+
+- (void)drawGaugeWithPressure: (CGFloat)pressure
+{
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //// Color Declarations
+    UIColor* strokeColor = [UIColor colorWithRed: 0.437 green: 0.437 blue: 0.437 alpha: 1];
+    UIColor* highPressureColor = [UIColor colorWithRed: 1 green: 0.3 blue: 0.3 alpha: 1];
+    UIColor* lowPressureColor = [UIColor colorWithRed: 0.316 green: 0.915 blue: 0.451 alpha: 1];
+    
+    //// Variable Declarations
+    CGFloat angle = -240 * pressure;
+    UIColor* limitingColor = pressure > 0.7 ? highPressureColor : lowPressureColor;
+    
+    //// Outer Frame Drawing
+    UIBezierPath* outerFramePath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(124, 42, 100, 100)];
+    [UIColor.whiteColor setFill];
+    [outerFramePath fill];
+    [strokeColor setStroke];
+    outerFramePath.lineWidth = 2;
+    [outerFramePath stroke];
+    
+    
+    //// Scale Frame Drawing
+    UIBezierPath* scaleFramePath = UIBezierPath.bezierPath;
+    [scaleFramePath moveToPoint: CGPointMake(138.49, 112.5)];
+    [scaleFramePath addCurveToPoint: CGPointMake(153.5, 56.49) controlPoint1: CGPointMake(127.17, 92.89) controlPoint2: CGPointMake(133.89, 67.81)];
+    [scaleFramePath addCurveToPoint: CGPointMake(209.51, 71.5) controlPoint1: CGPointMake(173.11, 45.17) controlPoint2: CGPointMake(198.19, 51.89)];
+    [scaleFramePath addCurveToPoint: CGPointMake(209.51, 112.5) controlPoint1: CGPointMake(216.83, 84.19) controlPoint2: CGPointMake(216.83, 99.81)];
+    [scaleFramePath addLineToPoint: CGPointMake(197.38, 105.5)];
+    [scaleFramePath addCurveToPoint: CGPointMake(197.38, 78.5) controlPoint1: CGPointMake(202.21, 97.15) controlPoint2: CGPointMake(202.21, 86.85)];
+    [scaleFramePath addCurveToPoint: CGPointMake(160.5, 68.62) controlPoint1: CGPointMake(189.93, 65.59) controlPoint2: CGPointMake(173.41, 61.16)];
+    [scaleFramePath addCurveToPoint: CGPointMake(150.62, 105.5) controlPoint1: CGPointMake(147.59, 76.07) controlPoint2: CGPointMake(143.16, 92.59)];
+    [scaleFramePath addLineToPoint: CGPointMake(138.49, 112.5)];
+    [scaleFramePath closePath];
+    [strokeColor setStroke];
+    scaleFramePath.lineWidth = 2;
+    [scaleFramePath stroke];
+    
+    
+    //// Display Drawing
+    UIBezierPath* displayPath = UIBezierPath.bezierPath;
+    [displayPath moveToPoint: CGPointMake(190.02, 129.74)];
+    [displayPath addCurveToPoint: CGPointMake(157.98, 129.74) controlPoint1: CGPointMake(179.78, 134.09) controlPoint2: CGPointMake(168.22, 134.09)];
+    [displayPath addLineToPoint: CGPointMake(160.72, 123.3)];
+    [displayPath addCurveToPoint: CGPointMake(187.28, 123.3) controlPoint1: CGPointMake(169.21, 126.9) controlPoint2: CGPointMake(178.79, 126.9)];
+    [displayPath addLineToPoint: CGPointMake(190.02, 129.74)];
+    [displayPath closePath];
+    [limitingColor setFill];
+    [displayPath fill];
+    [strokeColor setStroke];
+    displayPath.lineWidth = 2;
+    [displayPath stroke];
+    
+    
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+    [bezierPath moveToPoint: CGPointMake(174, 58)];
+    [bezierPath addLineToPoint: CGPointMake(174, 51)];
+    [bezierPath moveToPoint: CGPointMake(133, 92)];
+    [bezierPath addLineToPoint: CGPointMake(140, 92)];
+    [bezierPath moveToPoint: CGPointMake(208, 92)];
+    [bezierPath addLineToPoint: CGPointMake(215, 92)];
+    [bezierPath moveToPoint: CGPointMake(198.04, 67.96)];
+    [bezierPath addLineToPoint: CGPointMake(202.99, 63.01)];
+    [bezierPath moveToPoint: CGPointMake(145.01, 63.01)];
+    [bezierPath addLineToPoint: CGPointMake(149.96, 67.96)];
+    [bezierPath moveToPoint: CGPointMake(205.41, 78.99)];
+    [bezierPath addLineToPoint: CGPointMake(211.88, 76.31)];
+    [bezierPath moveToPoint: CGPointMake(136.12, 76.31)];
+    [bezierPath addLineToPoint: CGPointMake(142.59, 78.99)];
+    [bezierPath moveToPoint: CGPointMake(158.31, 54.12)];
+    [bezierPath addLineToPoint: CGPointMake(160.99, 60.59)];
+    [bezierPath moveToPoint: CGPointMake(187.01, 123.41)];
+    [bezierPath addLineToPoint: CGPointMake(189.69, 129.88)];
+    [bezierPath moveToPoint: CGPointMake(189.69, 54.12)];
+    [bezierPath addLineToPoint: CGPointMake(187.01, 60.59)];
+    [bezierPath moveToPoint: CGPointMake(160.99, 123.41)];
+    [bezierPath addLineToPoint: CGPointMake(158.31, 129.88)];
+    [strokeColor setStroke];
+    bezierPath.lineWidth = 2;
+    [bezierPath stroke];
+    
+    
+    //// Arrow Drawing
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 174, 92);
+    CGContextRotateCTM(context, -(angle + 120) * M_PI / 180);
+    
+    UIBezierPath* arrowPath = UIBezierPath.bezierPath;
+    [arrowPath moveToPoint: CGPointMake(-4, 14)];
+    [arrowPath addLineToPoint: CGPointMake(-4, 5)];
+    [arrowPath addLineToPoint: CGPointMake(-3, -5)];
+    [arrowPath addLineToPoint: CGPointMake(-3, -33)];
+    [arrowPath addLineToPoint: CGPointMake(0, -37)];
+    [arrowPath addLineToPoint: CGPointMake(3, -33)];
+    [arrowPath addLineToPoint: CGPointMake(3, -5)];
+    [arrowPath addLineToPoint: CGPointMake(4, 5)];
+    [arrowPath addLineToPoint: CGPointMake(4, 14)];
+    [arrowPath addLineToPoint: CGPointMake(-4, 14)];
+    [arrowPath closePath];
+    arrowPath.lineJoinStyle = kCGLineJoinRound;
+    
+    [strokeColor setFill];
+    [arrowPath fill];
+    [strokeColor setStroke];
+    arrowPath.lineWidth = 2;
+    [arrowPath stroke];
+    
+    CGContextRestoreGState(context);
+    
+    
+    //// Center Oval Drawing
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 174, 92);
+    
+    UIBezierPath* centerOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-6, -6, 12, 12)];
+    [UIColor.whiteColor setFill];
+    [centerOvalPath fill];
+    [strokeColor setStroke];
+    centerOvalPath.lineWidth = 2;
+    [centerOvalPath stroke];
+    
+    CGContextRestoreGState(context);
+    
+    
+    //// LimitOval Drawing
+    UIBezierPath* limitOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(204.68, 58.4, 3, 3)];
+    [UIColor.whiteColor setFill];
+    [limitOvalPath fill];
+    [strokeColor setStroke];
+    limitOvalPath.lineWidth = 2;
+    [limitOvalPath stroke];
+}
+
 
 
 @end

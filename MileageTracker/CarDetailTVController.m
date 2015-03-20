@@ -60,10 +60,13 @@
 //     NSData *pngData = [NSData dataWithContentsOfFile:self.selectedCar.carPhoto.lastObject];
 //     UIImage *image = [UIImage imageWithData:pngData];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    PhotoObject *obj =  [self.selectedCar.carPhoto lastObject];
+    NSString *photoName = [documentsDirectory stringByAppendingString:obj.imageName];
+    _carPhotoImageView.image = [UIImage imageNamed:photoName];
     
-    PhotoObject *obj = [self.selectedCar.carPhoto lastObject];
-    
-    _carPhotoImageView.image = [UIImage imageNamed:obj.imageName];
+    NSLog(@"photoName = %@", photoName);
     
     NSLog(@"self.selectedCar.name = %@", self.selectedCar.name);
     NSLog(@"self.activeCar.name = %@", self.currentActiveCar.name);
@@ -82,6 +85,13 @@
     _carOilChangeMileageTextField.delegate = nil;
     _nextOilChangeTextField.delegate = nil;
 }
+
+- (NSString*)documentPath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
 }
@@ -183,16 +193,38 @@
     // turn the image into png data
     NSData *pngData = UIImagePNGRepresentation(chosenImage);
     
+    /*
+     NSArray *subpaths;
+     BOOL isDir;
+     
+     NSArray *paths = NSSearchPathForDirectoriesInDomains
+     (NSLibraryDirectory, NSUserDomainMask, YES);
+     
+     if ([paths count] == 1) {
+     
+     NSFileManager *fileManager = [[NSFileManager alloc] init];
+     NSString *fontPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Fonts"];
+     
+     if ([fileManager fileExistsAtPath:fontPath isDirectory:&isDir] && isDir) {
+     subpaths = [fileManager subpathsAtPath:fontPath];
+     */
+    //NSArray *subpaths;
+    BOOL isDir;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-    NSString *uuidImageName = [NSString stringWithFormat:@"%@-image.png",[self.selectedCar uuid]];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:uuidImageName]; //Add the file name
-    NSLog(@"%@", filePath);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *carFolderPath = [documentsDirectory stringByAppendingString:@"/Photos/CarPhotos"];
+    NSString *uuidImageName = [NSString stringWithFormat:@"%@-CarImage.png",[self.selectedCar uuid]];
+    NSString *photoPath = [NSString stringWithFormat:@"/Photos/CarPhotos/%@", uuidImageName];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:carFolderPath isDirectory:&isDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:carFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:photoPath]; //Add the file name
+    NSLog(@"%@", photoPath);
     [pngData writeToFile:filePath atomically:YES]; //Write the file
     RLMRealm * realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     PhotoObject *obj = [[PhotoObject alloc] init];
-    obj.imageName = filePath;
+    obj.imageName = photoPath;
     [self.selectedCar.carPhoto addObject:obj];
     [realm commitWriteTransaction];
     

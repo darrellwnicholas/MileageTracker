@@ -219,12 +219,28 @@ static NSString *CellIdentifier = @"customCarCell";
 //    return percentOilLife;
 }
 
+- (float)calculateMPG:(Car*)car {
+    RLMResults *fuelResults = [car.fuelEntries objectsWhere:@"fillUp = YES"];
+    if (fuelResults.count <= 1) {
+        return 0.0;
+    }
+    RLMResults *sortedArray = [fuelResults sortedResultsUsingProperty:@"date" ascending:NO];
+    FuelEntry *lastEntry = [sortedArray firstObject];
+    FuelEntry *theOneBefore = [sortedArray objectAtIndex:1];
+    NSUInteger miles = lastEntry.mileage - theOneBefore.mileage;
+    float gallons = lastEntry.gallons;
+    float mpg = miles/gallons;
+
+    
+    return mpg;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UILabel *activeCarLabel = (UILabel*)[cell.contentView viewWithTag:4];
-    UILabel *mpgLabel = (UILabel*)[cell.contentView viewWithTag:5];
+    UILabel *mpgLabel = (UILabel*)[cell.contentView viewWithTag:50];
     UILabel *oilLifeLabel = (UILabel*)[cell.contentView viewWithTag:40];
     UILabel *carNameLabel = (UILabel*)[cell.contentView viewWithTag:20];
     UILabel *odometerLabel = (UILabel*)[cell.contentView viewWithTag:30];
@@ -245,6 +261,9 @@ static NSString *CellIdentifier = @"customCarCell";
         carImageView.image = [UIImage imageWithContentsOfFile:photoName];
         
         // oil life label
+        if ([self calculateCurrentOilLifeForCar:car] <= 10) {
+            oilLifeLabel.textColor = [UIColor redColor];
+        }
         oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
@@ -256,7 +275,7 @@ static NSString *CellIdentifier = @"customCarCell";
         
         // TODO: add a property to the Car class for "mpg"
         // For the time being, we will set this at a constant value, just for testing
-        mpgLabel.text = @"mpg: 22.52";
+        mpgLabel.text = [NSString stringWithFormat:@"%.2f", [self calculateMPG:car]];
         
         // if this is the active car, make the label visible
         if ([car.uuid isEqualToString:[self activeCarID]]) {
@@ -271,6 +290,9 @@ static NSString *CellIdentifier = @"customCarCell";
         carImageView.image = [UIImage imageWithContentsOfFile:photoName];
         
         // oil life label
+        if ([self calculateCurrentOilLifeForCar:car] <= 10) {
+            oilLifeLabel.textColor = [UIColor redColor];
+        }
         oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
@@ -282,7 +304,8 @@ static NSString *CellIdentifier = @"customCarCell";
         
         // TODO: add a property to the Car class for "mpg"
         // For the time being, we will set this at a constant value, just for testing
-        mpgLabel.text = @"mpg: 22.52";
+        mpgLabel.text = [NSString stringWithFormat:@"%.2f", [self calculateMPG:car]];
+        
         
         // if this is the active car, make the label visible
         if ([car.uuid isEqualToString:[self activeCarID]]) {

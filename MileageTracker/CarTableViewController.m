@@ -303,8 +303,7 @@ static NSString *CellIdentifier = @"customCarCell";
         NSString *miles = [NSString stringWithFormat:@"%@", @(car.currentMileage)];
         odometerLabel.text = miles;
         
-        // TODO: add a property to the Car class for "mpg"
-        // For the time being, we will set this at a constant value, just for testing
+        // MPG Label
         mpgLabel.text = [NSString stringWithFormat:@"%.2f", [self calculateMPG:car]];
         
         

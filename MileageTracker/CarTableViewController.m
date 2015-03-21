@@ -143,16 +143,6 @@ static NSString *CellIdentifier = @"customCarCell";
 }
 
 - (IBAction)insertNewObject:(id)sender {
-    /*
-     Car *car = [[Car alloc] init];
-     car.name = @"First Vehicle";
-     car.activeCar = @YES;
-     
-     RLMRealm *realm = [RLMRealm defaultRealm];
-     [realm beginWriteTransaction];
-     [realm addObject:car];
-     [realm commitWriteTransaction];
-     */
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Create New Vehicle" message:@"Enter Vehicle Name & Odometer" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         RLMRealm *realm = [RLMRealm defaultRealm];
@@ -207,32 +197,40 @@ static NSString *CellIdentifier = @"customCarCell";
         return result;
           
     }
-    /*  at this point you have how many miles are left before your next oil change. 1000 miles between changes. you have drove 300. You would have 700.
-        at this point you can return milesleftOnOilChange / milesBetweenChanges * 100. You multiply by 100 because you would get 700 / 1000 = .7 so multiply by 100 and return that as
-        an NSNumber with the value of 70 which would represent 70% oil life left.
-     */
-    
-//    NSNumber *milesLeftUntilOilChange;
-//    [NSDecimalSubtract((__bridge NSDecimal *)(milesLeftUntilOilChange), car.nextOilChange, car.currentMileage, NSRoundPlain)];
-//    NSNumber *percentOilLife = milesLeftUntilOilChange / milesBetweenChanges;
-//    
-//    return percentOilLife;
 }
 
 - (float)calculateMPG:(Car*)car {
-    RLMResults *fuelResults = [car.fuelEntries objectsWhere:@"fillUp = YES"];
-    if (fuelResults.count <= 1) {
+    RLMResults *fuelResults1 = [car.fuelEntries objectsWhere:@"fillUp = YES"];
+    if (fuelResults1.count <= 1) {
         return 0.0;
+    } else {
+        NSUInteger __block firstEntry = 0;
+        NSUInteger __block secondEntry = 0;
+        float __block gallonsTotal = 0.0;
+        
+        RLMResults *fuelResults = [car.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
+        NSMutableArray *results = [NSMutableArray new];
+        for (FuelEntry *entry in fuelResults) {
+            [results addObject:entry];
+        }
+        
+        [results enumerateObjectsUsingBlock:^(FuelEntry *obj, NSUInteger idx, BOOL *stop) {
+            if (obj.fillUp == YES && firstEntry == 0) {
+                firstEntry = obj.mileage;
+                gallonsTotal += obj.gallons;
+            } else if (obj.fillUp == NO && firstEntry == 0) {
+                idx++;
+            } else if (obj.fillUp == YES && firstEntry != 0) {
+                secondEntry = obj.mileage;
+                *stop = YES;
+            } else {
+                gallonsTotal += obj.gallons;
+            }
+            
+        }];
+        
+        return (firstEntry - secondEntry) / gallonsTotal;
     }
-    RLMResults *sortedArray = [fuelResults sortedResultsUsingProperty:@"date" ascending:NO];
-    FuelEntry *lastEntry = [sortedArray firstObject];
-    FuelEntry *theOneBefore = [sortedArray objectAtIndex:1];
-    NSUInteger miles = lastEntry.mileage - theOneBefore.mileage;
-    float gallons = lastEntry.gallons;
-    float mpg = miles/gallons;
-
-    
-    return mpg;
 }
 
 
@@ -263,6 +261,8 @@ static NSString *CellIdentifier = @"customCarCell";
         // oil life label
         if ([self calculateCurrentOilLifeForCar:car] <= 10) {
             oilLifeLabel.textColor = [UIColor redColor];
+        } else {
+            oilLifeLabel.textColor = [UIColor greenColor];
         }
         oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         
@@ -273,8 +273,7 @@ static NSString *CellIdentifier = @"customCarCell";
         NSString *miles = [NSString stringWithFormat:@"%@", @(car.currentMileage)];
         odometerLabel.text = miles;
         
-        // TODO: add a property to the Car class for "mpg"
-        // For the time being, we will set this at a constant value, just for testing
+        // MPG Label
         mpgLabel.text = [NSString stringWithFormat:@"%.2f", [self calculateMPG:car]];
         
         // if this is the active car, make the label visible
@@ -292,6 +291,8 @@ static NSString *CellIdentifier = @"customCarCell";
         // oil life label
         if ([self calculateCurrentOilLifeForCar:car] <= 10) {
             oilLifeLabel.textColor = [UIColor redColor];
+        } else {
+            oilLifeLabel.textColor = [UIColor greenColor];
         }
         oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
         

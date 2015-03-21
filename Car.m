@@ -20,7 +20,6 @@
                                     @"driverID"         : @"0000",
                                     @"oilChangeMiles"   : @3000,
                                     @"nextOilChange"    : @3001,
-                                    @"nonFillUpGallons" : @0.0,
                                     };
     return defaultValues;
 }

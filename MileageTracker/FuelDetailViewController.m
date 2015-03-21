@@ -145,17 +145,7 @@
         [realm beginWriteTransaction];
         self.selectedEntry.price = self.pricePerGallonTextField.text.doubleValue;
         self.selectedEntry.gallons = self.numberGallonsPumpedTextField.text.doubleValue;
-        if (self.selectedEntry.fillUp == NO) {
-            if (self.activeCar.nonFillUpGallons == 0.0) {
-                self.activeCar.nonFillUpGallons += self.numberGallonsPumpedTextField.text.doubleValue;
-                //TODO - Make a NSUserDefault string from NSString stringWithFormat consisting of uuid -- nonFillUpGallons
-                //TODO - Extract the nonFillupgallons from the end of the string, add the next nonFillupGallons, then recreate string and set the value
-                //This will allow the CarTableView MPG method to calculate accurate mileage
-            }
         
-        } else {
-            //TODO figure out the rest of how to calculate fuel mileage. Right now, as long as every entry is a fillUp, everything is fine, but when it is not a fill up, first we are
-        }
         
         [realm commitWriteTransaction];
         [self.navigationController popViewControllerAnimated:YES];

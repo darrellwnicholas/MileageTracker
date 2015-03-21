@@ -69,6 +69,7 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
         [[NSUserDefaults standardUserDefaults] synchronize];
         activeCar.currentMileage = entry.mileage;
         [activeCar.oilChanges addObject:entry];
+        activeCar.nextOilChange = entry.mileage + activeCar.oilChangeMiles;
         [realm commitWriteTransaction];
         [self.tableView reloadData];
     }];

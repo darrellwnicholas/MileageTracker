@@ -32,6 +32,12 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     imageView.alpha = 0.2;
     [self.tableView setBackgroundView:imageView];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //    self.title = self.activeCar.name;
+    //    [self.tableView setNeedsDisplay];
+    [self.tableView reloadData];
+}
 
 - (NSString *)activeCarID {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"activeCar"];
@@ -63,6 +69,7 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
         [[NSUserDefaults standardUserDefaults] synchronize];
         activeCar.currentMileage = entry.mileage;
         [activeCar.oilChanges addObject:entry];
+        activeCar.nextOilChange = entry.mileage + activeCar.oilChangeMiles;
         [realm commitWriteTransaction];
         [self.tableView reloadData];
     }];

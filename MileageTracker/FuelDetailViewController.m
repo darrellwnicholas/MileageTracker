@@ -146,6 +146,7 @@
         self.selectedEntry.price = self.pricePerGallonTextField.text.doubleValue;
         self.selectedEntry.gallons = self.numberGallonsPumpedTextField.text.doubleValue;
         
+        
         [realm commitWriteTransaction];
         [self.navigationController popViewControllerAnimated:YES];
     }];

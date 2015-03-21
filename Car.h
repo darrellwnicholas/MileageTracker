@@ -32,6 +32,7 @@ RLM_ARRAY_TYPE(ServiceEntry)
 @property NSInteger oilChangeMiles;
 @property NSInteger nextOilChange;
 
+
 @property RLMArray<PhotoObject> *carPhoto;
 @property RLMArray<OilChange> *oilChanges;
 @property RLMArray<FuelEntry> *fuelEntries;

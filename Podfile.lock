@@ -1,12 +1,18 @@
 PODS:
-  - Realm (0.90.5):
-    - Realm/Headers (= 0.90.5)
-  - Realm/Headers (0.90.5)
+  - PNChart (0.8):
+    - UICountingLabel (~> 1.0.0)
+  - Realm (0.90.6):
+    - Realm/Headers (= 0.90.6)
+  - Realm/Headers (0.90.6)
+  - UICountingLabel (1.0.0)
 
 DEPENDENCIES:
+  - PNChart (~> 0.8)
   - Realm
 
 SPEC CHECKSUMS:
-  Realm: aea25534b97be77995650c2339aa6ed010dfcc8a
+  PNChart: 278c48336e911ee661898f5b04f040b2d9c8df26
+  Realm: 6c3facc11964ab9f828f47de6d0e9bf9c4d9c818
+  UICountingLabel: 0a0e9e34bf4690dbd127aaec552d19ed938087a9
 
 COCOAPODS: 0.35.0

@@ -143,11 +143,14 @@ static NSString *CellIdentifier = @"fuelEntryCell";
     // Configure the cell...
     Car *activeCar = [Car objectInRealm:[RLMRealm defaultRealm] forPrimaryKey:[self activeCarID]];
     
+    UILabel *priceLabel = (UILabel*)[cell.contentView viewWithTag:15];
+
+    
     RLMResults *myEntries = [activeCar.fuelEntries sortedResultsUsingProperty:@"date" ascending:NO];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         FuelEntry *entry = [myEntries objectAtIndex:indexPath.row];
-       
+        
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.timeStyle = NSDateFormatterMediumStyle;
@@ -157,6 +160,9 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         
         cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
+        // Price Label
+        float entryPrice = entry.gallons * entry.price;
+        priceLabel.text = [NSString stringWithFormat:@"$%.2f", entryPrice];
     } else {
         FuelEntry *entry = [myEntries objectAtIndex:indexPath.row];
         
@@ -169,6 +175,9 @@ static NSString *CellIdentifier = @"fuelEntryCell";
         
         cell.textLabel.text = [NSString stringWithFormat:@"%li miles", (long)entry.mileage];
         cell.detailTextLabel.text = [formatter stringFromDate:entry.date];
+        // Price Label
+        float entryPrice = entry.gallons * entry.price;
+        priceLabel.text = [NSString stringWithFormat:@"$%.2f", entryPrice];
     }
     
     return cell;

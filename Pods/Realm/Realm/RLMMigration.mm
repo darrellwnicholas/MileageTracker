@@ -28,8 +28,8 @@
 #import "RLMResults_Private.h"
 #import "RLMSchema_Private.h"
 
-#import <tightdb/link_view.hpp>
-#import <tightdb/table_view.hpp>
+#import <realm/link_view.hpp>
+#import <realm/table_view.hpp>
 
 // The source realm for a migration has to use a SharedGroup to be able to share
 // the file with the destination realm, but we don't want to let the user call
@@ -106,7 +106,7 @@
             // FIXME: replace with count of distinct once we support indexing
 
             // FIXME: support other types
-            tightdb::Table *table = objectSchema.table;
+            realm::Table *table = objectSchema.table;
             NSUInteger count = table->size();
             if (primaryProperty.type == RLMPropertyTypeString) {
                 if (!table->has_search_index(primaryProperty.column)) {
@@ -131,6 +131,9 @@
 
 - (void)execute:(RLMMigrationBlock)block {
     @autoreleasepool {
+        // copy old schema and reset after migration
+        RLMSchema *savedSchema = [_realm.schema copy];
+
         // disable all primary keys for migration
         for (RLMObjectSchema *objectSchema in _realm.schema.objectSchema) {
             objectSchema.primaryKeyProperty.isPrimary = NO;
@@ -142,15 +145,46 @@
 
         // verify uniqueness for any new unique columns before committing
         [self verifyPrimaryKeyUniqueness];
+
+        // reset schema to saved schema since it has been altered
+        RLMRealmSetSchema(_realm, savedSchema, true);
     }
 }
 
--(RLMObject *)createObject:(NSString *)className withObject:(id)object {
-    return [_realm createObject:className withObject:object];
+-(RLMObject *)createObject:(NSString *)className withValue:(id)value {
+    return [_realm createObject:className withValue:value];
+}
+
+- (RLMObject *)createObject:(NSString *)className withObject:(id)object {
+    return [self createObject:className withValue:object];
 }
 
 - (void)deleteObject:(RLMObject *)object {
     [_realm deleteObject:object];
+}
+
+- (BOOL)deleteDataForClassName:(NSString *)name {
+    if (!name) {
+        return false;
+    }
+
+    size_t table = _realm.group->find_table(RLMStringDataWithNSString(RLMTableNameForClass(name)));
+    if (table == realm::not_found) {
+        return false;
+    }
+
+    if ([_realm.schema schemaForClassName:name]) {
+        _realm.group->get_table(table)->clear();
+    }
+    else {
+        _realm.group->remove_table(table);
+
+        if (RLMRealmPrimaryKeyForObjectClass(_realm, name)) {
+            RLMRealmSetPrimaryKeyForObjectClass(_realm, name, nil);
+        }
+    }
+
+    return true;
 }
 
 @end

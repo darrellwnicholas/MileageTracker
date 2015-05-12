@@ -264,7 +264,7 @@ static NSString *CellIdentifier = @"customCarCell";
         } else {
             oilLifeLabel.textColor = [UIColor greenColor];
         }
-        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
+        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", (unsigned long)[self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
         carNameLabel.text = car.name;
@@ -294,7 +294,7 @@ static NSString *CellIdentifier = @"customCarCell";
         } else {
             oilLifeLabel.textColor = [UIColor greenColor];
         }
-        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", [self calculateCurrentOilLifeForCar:car]];
+        oilLifeLabel.text = [NSString stringWithFormat:@"%li%%", (unsigned long)[self calculateCurrentOilLifeForCar:car]];
         
         // Car Name Label
         carNameLabel.text = car.name;

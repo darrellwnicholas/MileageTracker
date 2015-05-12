@@ -19,14 +19,14 @@
 #import "RLMSchema_Private.h"
 
 #import "RLMAccessor.h"
-#import "RLMObject.h"
+#import "RLMObject_Private.hpp"
 #import "RLMObjectSchema_Private.hpp"
 #import "RLMRealm_Private.hpp"
 #import "RLMSwiftSupport.h"
 #import "RLMUtil.hpp"
 
 #import <objc/runtime.h>
-#import <tightdb/group.hpp>
+#import <realm/group.hpp>
 
 NSString * const c_objectTableNamePrefix = @"class_";
 const char * const c_metadataTableName = "metadata";
@@ -91,7 +91,8 @@ static NSMutableDictionary *s_localNameToClass;
     s_localNameToClass = [NSMutableDictionary dictionary];
     for (unsigned int i = 0; i < numClasses; i++) {
         Class cls = classes[i];
-        if (!RLMIsObjectSubclass(cls)) {
+        static Class objectBaseClass = [RLMObjectBase class];
+        if (!RLMIsKindOfClass(cls, objectBaseClass) || ![cls shouldPersistToRealm]) {
             continue;
         }
 
@@ -163,7 +164,7 @@ static NSMutableDictionary *s_localNameToClass;
 }
 
 NSUInteger RLMRealmSchemaVersion(RLMRealm *realm) {
-    tightdb::TableRef table = realm.group->get_table(c_metadataTableName);
+    realm::TableRef table = realm.group->get_table(c_metadataTableName);
     if (!table || table->get_column_count() == 0) {
         return RLMNotVersioned;
     }
@@ -171,17 +172,17 @@ NSUInteger RLMRealmSchemaVersion(RLMRealm *realm) {
 }
 
 void RLMRealmSetSchemaVersion(RLMRealm *realm, NSUInteger version) {
-    tightdb::TableRef table = realm.group->get_or_add_table(c_metadataTableName);
+    realm::TableRef table = realm.group->get_or_add_table(c_metadataTableName);
     table->set_int(c_versionColumnIndex, 0, version);
 }
 
 NSString *RLMRealmPrimaryKeyForObjectClass(RLMRealm *realm, NSString *objectClass) {
-    tightdb::TableRef table = realm.group->get_table(c_primaryKeyTableName);
+    realm::TableRef table = realm.group->get_table(c_primaryKeyTableName);
     if (!table) {
         return nil;
     }
     size_t row = table->find_first_string(c_primaryKeyObjectClassColumnIndex, RLMStringDataWithNSString(objectClass));
-    if (row == tightdb::not_found) {
+    if (row == realm::not_found) {
         return nil;
     }
     return RLMStringDataToNSString(table->get_string(c_primaryKeyPropertyNameColumnIndex, row));
@@ -193,16 +194,16 @@ bool RLMRealmHasMetadataTables(RLMRealm *realm) {
 
 bool RLMRealmCreateMetadataTables(RLMRealm *realm) {
     bool changed = false;
-    tightdb::TableRef table = realm.group->get_or_add_table(c_primaryKeyTableName);
+    realm::TableRef table = realm.group->get_or_add_table(c_primaryKeyTableName);
     if (table->get_column_count() == 0) {
-        table->add_column(tightdb::type_String, c_primaryKeyObjectClassColumnName);
-        table->add_column(tightdb::type_String, c_primaryKeyPropertyNameColumnName);
+        table->add_column(realm::type_String, c_primaryKeyObjectClassColumnName);
+        table->add_column(realm::type_String, c_primaryKeyPropertyNameColumnName);
         changed = true;
     }
 
     table = realm.group->get_or_add_table(c_metadataTableName);
     if (table->get_column_count() == 0) {
-        table->add_column(tightdb::type_Int, c_versionColumnName);
+        table->add_column(realm::type_Int, c_versionColumnName);
 
         // set initial version
         table->add_empty_row();
@@ -214,17 +215,17 @@ bool RLMRealmCreateMetadataTables(RLMRealm *realm) {
 }
 
 void RLMRealmSetPrimaryKeyForObjectClass(RLMRealm *realm, NSString *objectClass, NSString *primaryKey) {
-    tightdb::TableRef table = realm.group->get_table(c_primaryKeyTableName);
+    realm::TableRef table = realm.group->get_table(c_primaryKeyTableName);
 
     // get row or create if new object and populate
     size_t row = table->find_first_string(c_primaryKeyObjectClassColumnIndex, RLMStringDataWithNSString(objectClass));
-    if (row == tightdb::not_found && primaryKey != nil) {
+    if (row == realm::not_found && primaryKey != nil) {
         row = table->add_empty_row();
         table->set_string(c_primaryKeyObjectClassColumnIndex, row, RLMStringDataWithNSString(objectClass));
     }
 
     // set if changing, or remove if setting to nil
-    if (primaryKey == nil && row != tightdb::not_found) {
+    if (primaryKey == nil && row != realm::not_found) {
         table->remove(row);
     }
     else {

@@ -40,6 +40,20 @@
         defaultCarPhoto.imageName = nameOfCar;
         
         NSLog(@"%@",[UIImage imageNamed:defaultCarPhoto.imageName]);
+        /*
+         BOOL isDir;
+         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+         NSString *documentsDirectory = [paths objectAtIndex:0]; //Get the docs directory
+         NSString *carFolderPath = [documentsDirectory stringByAppendingString:@"/Photos/CarPhotos"];
+         NSString *uuidImageName = [NSString stringWithFormat:@"%@-CarImage.png",[self.selectedCar uuid]];
+         NSString *photoPath = [NSString stringWithFormat:@"/Photos/CarPhotos/%@", uuidImageName];
+         if (![[NSFileManager defaultManager] fileExistsAtPath:carFolderPath isDirectory:&isDir]) {
+         [[NSFileManager defaultManager] createDirectoryAtPath:carFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
+         }
+         NSString *filePath = [documentsDirectory stringByAppendingPathComponent:photoPath];
+         */
+
+
         
         [realm beginWriteTransaction];
         [realm addObject:car];

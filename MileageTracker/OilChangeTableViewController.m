@@ -26,6 +26,7 @@ static NSString *CellIdentifier = @"oilChangeEntryCell";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UIImage *background = [UIImage imageNamed:@"oilTableBG"];
+//    self.tableView.estimatedRowHeight = 44.0;
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:background];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
